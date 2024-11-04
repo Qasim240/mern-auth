@@ -8,6 +8,16 @@ const loginUser = require("./routes/loginUserRoute")
 const auth = require("./middleware/authMiddleware")
 const config = require('config')
 const app = express();
+const cors = require("cors")
+
+
+app.use(cors({
+    origin: 'http://localhost:5174' 
+}));
+
+
+
+
 
 app.use(express.json());
 // Connect to MongoDB
