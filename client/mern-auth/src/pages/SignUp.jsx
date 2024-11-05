@@ -32,9 +32,6 @@ const SignUp = () => {
 
             navigate("/login");
 
-            // Store user data in localStorage (if needed)
-            localStorage.setItem('user', JSON.stringify(response));
-
         } catch (error) {
             console.log("Could not signup", error);
         }
