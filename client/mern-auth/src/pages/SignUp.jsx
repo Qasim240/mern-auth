@@ -29,6 +29,7 @@ const SignUp = () => {
 
             // User registration was successful, navigate to login
             console.log("User registered successfully", response);
+
             navigate("/login");
 
             // Store user data in localStorage (if needed)
@@ -65,8 +66,8 @@ const SignUp = () => {
             />
             <div>
                 <button type='submit' disabled={isLoading}>Signup</button>
-                {isLoading && <p>Signing up...</p>} {/* Show loading state */}
-                {error && <p style={{ color: 'red' }}>Error: {error.message}</p>} {/* Show error message */}
+                {isLoading && <p>Signing up...</p>} 
+                {error && <p style={{ color: 'red' }}>Error: {error.message}</p>} 
             </div>
         </form>
     );
