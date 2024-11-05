@@ -20,7 +20,6 @@ const Dashboard = () => {
 
     const handleLogout = () => {
         dispatch(clearUser())
-        navigate("/login")
     }
 
     return (

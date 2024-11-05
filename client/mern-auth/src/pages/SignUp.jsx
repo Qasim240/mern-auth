@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useSignUpMutation } from '../redux/baseApi';
 
 const SignUp = () => {
@@ -62,9 +62,10 @@ const SignUp = () => {
                 onChange={handleInputChange}
             />
             <div>
+                <button><Link to="/login">Login</Link></button>
                 <button type='submit' disabled={isLoading}>Signup</button>
-                {isLoading && <p>Signing up...</p>} 
-                {error && <p style={{ color: 'red' }}>Error: {error.message}</p>} 
+                {isLoading && <p>Signing up...</p>}
+                {error && <p style={{ color: 'red' }}>Error: {error.message}</p>}
             </div>
         </form>
     );

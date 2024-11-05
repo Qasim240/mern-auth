@@ -11,6 +11,7 @@ import {
 } from "react-router-dom";
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
+import ProtectedRoutes from './utils/ProtectedRoutes';
 const App = () => {
   return (
     <>
@@ -19,7 +20,11 @@ const App = () => {
         <Routes>
           <Route path="/" element={<SignUp />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/dashboard" element={<Dashboard />} />
+          {/* protected Routes */}
+          <Route element={<ProtectedRoutes />} >
+            <Route path="/dashboard" element={<Dashboard />} />
+          </Route>
+
         </Routes>
       </BrowserRouter>
 

@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from 'react'; // Import useEffect
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { useLoginMutation } from '../redux/baseApi';
-import { useDispatch, useSelector } from 'react-redux'; // Import useSelector
+import { useDispatch, useSelector } from 'react-redux';
 import { setUser } from '../redux/slices/userSlice';
 
 const Login = () => {
     const [login, { data, error, isLoading }] = useLoginMutation();
+    const isLoggedIn = useSelector((state) => state.user.isLoggedIn)
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const [formData, setFormData] = useState({
@@ -22,6 +23,15 @@ const Login = () => {
             [name]: value,
         }));
     };
+
+    useEffect(() => {
+        if (isLoggedIn) {
+            navigate('/dashboard');
+        }
+    }, [isLoggedIn, navigate]);
+
+
+
 
     const onSubmit = async (e) => {
         e.preventDefault();
@@ -62,7 +72,9 @@ const Login = () => {
                 onChange={handleInputChange}
             />
             <div>
+                <button>  <Link to="/">signup</Link></button>
                 <button type='submit'>Login</button>
+
             </div>
         </form>
     );
