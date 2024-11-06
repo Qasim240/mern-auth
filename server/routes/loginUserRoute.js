@@ -7,7 +7,6 @@ const bcrypt = require("bcrypt");
 const config = require("config");
 const router = express.Router();
 
-
 router.post("/", async (req, res) => {
     try {
         const { email, password } = req.body;
@@ -31,7 +30,6 @@ router.post("/", async (req, res) => {
             email: user.email,
             token: token
         })
-
 
     } catch (ex) {
         console.log("Error:", ex)
