@@ -5,9 +5,20 @@ export const apiEndpoints = {
       url: 'register',
       method: 'POST',
     },
+
     login: {
       url: 'login',
       method: 'POST',
     },
+
+    FlightRecord: {
+      url: 'flightrecord',
+      method: 'POST',
+    },
+    deleteFlight:{
+   url: 'deleteflight/:id',
+      method: 'DELETE'
+    }
+
   };
   

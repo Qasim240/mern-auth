@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useLoginMutation } from '../redux/baseApi';
+import { useLoginMutation } from '../../../redux/baseApi';
 import { useDispatch, useSelector } from 'react-redux';
-import { setUser } from '../redux/slices/userSlice';
+import { setUser } from '../../../redux/slices/userSlice';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';

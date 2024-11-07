@@ -1,7 +1,7 @@
 
 
 import React from 'react'
-import SignUp from './pages/SignUp'
+
 import './App.css';
 import {
   BrowserRouter,
@@ -9,8 +9,9 @@ import {
   Route,
   Link,
 } from "react-router-dom";
-import Login from './pages/Login';
-import Dashboard from './pages/Dashboard';
+import SignUp from './components/admin/pages/SignUp';
+import Login from './components/admin/pages/Login';
+import Dashboard from './components/admin/pages/Dashboard';
 import ProtectedRoutes from './utils/ProtectedRoutes';
 const App = () => {
   return (

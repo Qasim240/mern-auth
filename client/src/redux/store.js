@@ -5,19 +5,21 @@ import { setupListeners } from '@reduxjs/toolkit/query';
 import { baseApi } from './baseApi';
 import storage from 'redux-persist/lib/storage';
 import { persistReducer, persistStore } from 'redux-persist';
-import userReducer from './slices/userSlice'; // Import the user slice reducer
+import userReducer from './slices/userSlice';
+import flightRecordReducer from './slices/flightRecordSlice'; // Import the flightRecord slice reducer
 
 // Configure persist for `baseApi`
 const persistConfig = {
   key: 'root',
   storage,
-  whitelist: [baseApi.reducerPath, 'user'], 
+  whitelist: [baseApi.reducerPath, 'user', 'flightRecord'], // Add 'flightRecord' here if you want it to be persisted
 };
 
 // Combine reducers into a root reducer
 const rootReducer = combineReducers({
   [baseApi.reducerPath]: baseApi.reducer,
-  user: userReducer, // the user reducer here
+  user: userReducer,
+  flightRecord: flightRecordReducer, // Add the flightRecord reducer here
 });
 
 // Wrap the root reducer with persistReducer

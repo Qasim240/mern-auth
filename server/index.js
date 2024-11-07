@@ -5,6 +5,8 @@ const express = require("express");
 const mongoose = require("mongoose");
 const registerUser = require('./routes/registerUserRoute')
 const loginUser = require("./routes/loginUserRoute")
+const flightRcord = require("./routes/flightRecordRoute")
+const deletFlight = require("./routes/deleteFlight")
 const auth = require("./middleware/authMiddleware")
 const config = require('config')
 const app = express();
@@ -12,10 +14,8 @@ const cors = require("cors")
 
 
 app.use(cors({
-    origin: 'http://localhost:5173' 
+    origin: 'http://localhost:5173'
 }));
-
-
 
 
 app.use(express.json());
@@ -28,10 +28,12 @@ mongoose.connect("mongodb+srv://muhammadqasim1014:4kExfYf1Vv9qXiDX@cluster0.8edy
 // public Routes
 app.use('/api/register', registerUser);
 app.use('/api/login', loginUser);
+app.use('/api/flightrecord', flightRcord)
+app.use('/api/deleteflight', deletFlight);
 
 
 // protected Routes
-app.use(auth); 
+app.use(auth);
 app.get('/api/dashboard', (req, res) => {
     res.send("Welcome to the dashboard " + req.user._id);
 });
