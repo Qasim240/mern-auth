@@ -1,21 +1,13 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useFlightRecordMutation } from '../../../redux/baseApi';
-import * as yup from 'yup';
 import { deleteFlightRecord } from '../../../redux/slices/flightRecordSlice';
 import Navbar from '../../compotent/Navbar';
 import { useDeleteFlightMutation } from '../../../redux/baseApi';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import AddFlightPopup from '../../compotent/AddFlightPopup';
-// Validation schema
-const schema = yup.object().shape({
-    flightName: yup.string().required('Flight Name is required'),
-    departure: yup.string().required('Departure is required'),
-    destination: yup.string().required('Destination is required'),
-    date: yup.string().required('Date is required'),
-    time: yup.string().required('Time is required'),
-});
+
 
 const Dashboard = () => {
     const [{ isLoading }] = useFlightRecordMutation();
@@ -27,11 +19,8 @@ const Dashboard = () => {
     const [isPopupOpen, setIsPopupOpen] = useState(false);
     const handleOpenPopup = () => setIsPopupOpen(true);
 
-
-
     const date = new Date();
     const hours = date.getHours();
-
     let timeOfDay;
 
     if (hours >= 5 && hours < 12) {
@@ -41,9 +30,6 @@ const Dashboard = () => {
     } else {
         timeOfDay = "Evening";
     }
-
-    console.log("Good", timeOfDay);
-
 
 
     const handleDeleteFlight = async (id) => {
