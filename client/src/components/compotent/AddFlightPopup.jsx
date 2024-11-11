@@ -38,7 +38,7 @@ const AddFlightPopup = ({ isPopupOpen, setIsPopupOpen }) => {
             toast.success("Flight added successfully!", { autoClose: 1000 });
             setIsPopupOpen(false); 
         } catch (err) {
-            toast.error("Error submitting flight: " + (err?.message || err), { autoClose: 1000 });
+            toast.error("Flight already exists: ", { autoClose: 1000 });
         }
     };
 
@@ -50,9 +50,16 @@ const AddFlightPopup = ({ isPopupOpen, setIsPopupOpen }) => {
                     onClick={() => setIsPopupOpen(false)}
                 >
                     <div
-                        className="bg-white p-5 rounded shadow-lg w-[30%]"
+                        className="bg-white p-5 rounded shadow-lg w-[30%] relative"
                         onClick={(e) => e.stopPropagation()} // Prevents closing when clicking inside the modal
                     >
+                        {/* Loader with backdrop */}
+                        {isLoading && (
+                            <div className="absolute inset-0 bg-black bg-opacity-50 flex justify-center items-center z-10">
+                                <div className="w-16 h-16 border-t-4 border-blue-500 border-solid rounded-full animate-spin"></div>
+                            </div>
+                        )}
+
                         <button
                             className="absolute top-2 right-2 text-gray-600 hover:text-gray-800"
                             onClick={() => setIsPopupOpen(false)}
@@ -118,6 +125,9 @@ const AddFlightPopup = ({ isPopupOpen, setIsPopupOpen }) => {
                     </div>
                 </div>
             )}
+
+            {/* Toast Container placed outside of the modal */}
+            <ToastContainer />
         </>
     );
 };

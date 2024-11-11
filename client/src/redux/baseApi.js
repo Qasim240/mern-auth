@@ -53,4 +53,5 @@ export const {
   useLoginMutation,
   useFlightRecordMutation,
   useDeleteFlightMutation,
+  useUpdatedFlightMutation,
 } = baseApi;
