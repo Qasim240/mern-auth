@@ -5,7 +5,7 @@
 ## Setup Instructions
 
 - Clone the repository:  
-  `git clone [<your-repository-link>](https://github.com/Qasim240/mern-auth.git)`
+  `git clone https://github.com/Qasim240/mern-auth.git`
 
 - **Server Side Setup**:
   - Navigate to the server directory:  
