@@ -10,8 +10,7 @@ import EditFlightPopup from '../EditFlightPopup';
 const Dashboard = () => {
     const [{ isLoading }] = useFlightRecordMutation();
     const [deleteFlight] = useDeleteFlightMutation();
-    const [updateFlight] = useUpdatedFlightMutation();  // API hook for flight update
-
+    const [updateFlight] = useUpdatedFlightMutation();
     const user = useSelector((state) => state.user.user);
     const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
     const flightsRecords = useSelector((state) => state.flightRecord.flightRecord);
@@ -43,50 +42,38 @@ const Dashboard = () => {
     // Open edit popup
     const openEditPopup = (flight) => {
         setSelectedFlight(flight);
+        console.log("Flight", flight)
         setIsEditPopupOpen(true);
     };
 
     // Handle flight update
     const handleUpdateFlight = async (updatedFlight) => {
         try {
+            console.log("Updating flight with ID:", updatedFlight._id);
             const response = await updateFlight(updatedFlight).unwrap();
-    
-            // Log the response for debugging
             console.log("API Response:", response);
-    
-            if (response && response.data) {
-                const updatedFlightData = response.data;
-                if (updatedFlightData._id) {
-                    dispatch(updateFlightRecord({
-                        id: updatedFlightData._id,
-                        flightName: updatedFlightData.flightName,
-                        departure: updatedFlightData.departure,
-                        destination: updatedFlightData.destination,
-                        date: updatedFlightData.date,
-                        time: updatedFlightData.time,
-                    }));
-                    setIsEditPopupOpen(false);
-                }
+            if (response?.data?._id) {
+                dispatch(updateFlightRecord({
+                    id: response.data._id,
+                    flightName: response.data.flightName,
+                    departure: response.data.departure,
+                    returnFlight: response.data.returnFlight, 
+                    origin: response.data.origin, 
+                    destination: response.data.destination,
+                    date: response.data.date,
+                    time: response.data.time,
+                }));
+                setIsEditPopupOpen(false);
+                
             } else {
-  
-                console.error("Flight not found or unexpected response format:", response);
+                console.error("Unexpected response format:", response);
             }
         } catch (error) {
-
-            if (error.status === 404) {
-                console.error("Flight not found. Please check the flight details.");
-            } else if (error.status === "PARSING_ERROR") {
-                console.error("Server response was not in JSON format.");
-            } else {
-                console.error('Could not update flight:', error);
-            }
+            console.error("Error updating flight:", error);
         }
     };
     
     
-    
-    
-
     return (
         <div className="bg-gradient-to-r from-blue-500 via-teal-400 to-blue-500 min-h-screen">
             <Navbar />
@@ -118,9 +105,11 @@ const Dashboard = () => {
                                 <thead>
                                     <tr>
                                         <th className="py-2 px-4 border-b text-left">Flight Name</th>
-                                        <th className="py-2 px-4 border-b text-left">Departure</th>
+                                        <th className="py-2 px-4 border-b text-left">From</th>
                                         <th className="py-2 px-4 border-b text-left">Destination</th>
-                                        <th className="py-2 px-4 border-b text-left">Date</th>
+                                        <th className="py-2 px-4 border-b text-left">Departure</th>
+                                        <th className="py-2 px-4 border-b text-left">Return</th>
+                                        {/* <th className="py-2 px-4 border-b text-left">Date</th> */}
                                         <th className="py-2 px-4 border-b text-left">Time</th>
                                         <th className="py-2 px-4 border-b text-right">Actions</th>
                                     </tr>
@@ -129,9 +118,11 @@ const Dashboard = () => {
                                     {flightsRecords.map((flight) => (
                                         <tr key={flight.id} className="hover:bg-gray-100 transition-all">
                                             <td className="py-2 px-4 border-b">{flight.flightName}</td>
-                                            <td className="py-2 px-4 border-b">{flight.departure}</td>
+                                            <td className="py-2 px-4 border-b">{flight.origin}</td>
                                             <td className="py-2 px-4 border-b">{flight.destination}</td>
-                                            <td className="py-2 px-4 border-b">{flight.date}</td>
+                                            <td className="py-2 px-4 border-b">{flight.departure}</td>
+                                            <td className="py-2 px-4 border-b">{flight.returnFlight}</td>
+                                            {/* <td className="py-2 px-4 border-b">{flight.date}</td> */}
                                             <td className="py-2 px-4 border-b">{flight.time}</td>
                                             <td className="py-2 px-4 border-b text-right">
                                                 <button onClick={() => handleDeleteFlight(flight.id)} className="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600 transition-all">Delete</button>
@@ -152,7 +143,7 @@ const Dashboard = () => {
                                 isOpen={isEditPopupOpen}
                                 flight={selectedFlight}
                                 onClose={() => setIsEditPopupOpen(false)}
-                                onUpdate={handleUpdateFlight} // Pass the handleUpdateFlight function here
+                                onUpdate={handleUpdateFlight}
                             />
                         )}
                     </div>

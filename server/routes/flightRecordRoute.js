@@ -13,9 +13,11 @@ router.post('/', async (req, res) => {
         let flight = await flightDetails.findOne({
             flightName: req.body.flightName,
             departure: req.body.departure,
+            origin: req.body.origin,
             destination: req.body.destination,
             date: req.body.date,
-            time: req.body.time
+            time: req.body.time,
+            returnFlight: req.body.returnFlight
         });
 
         if (flight) return res.status(403).send("Flight Already Exists");
@@ -23,9 +25,11 @@ router.post('/', async (req, res) => {
         flight = new flightDetails({
             flightName: req.body.flightName,
             departure: req.body.departure,
+            origin: req.body.origin,
             destination: req.body.destination,
             date: req.body.date,
-            time: req.body.time
+            time: req.body.time,
+            returnFlight: req.body.returnFlight
         });
 
         await flight.save();
@@ -34,9 +38,11 @@ router.post('/', async (req, res) => {
             id: flight._id,
             flightName: flight.flightName,
             departure: flight.departure,
+            origin: flight.origin,
             destination: flight.destination,
             date: flight.date,
-            time: flight.time
+            time: flight.time,
+            returnFlight: req.body.returnFlight
         });
     } catch (ex) {
         console.error("Error", ex);

@@ -10,11 +10,11 @@ const flightRecordSlice = createSlice({
     reducers: {
         // Action to add a flight record
         setFlightRecord: (state, action) => {
-            const { id, flightName, departure, destination, date, time } = action.payload;
+            const { id, flightName, departure, origin, destination, date, time, returnFlight } = action.payload;
             if (!Array.isArray(state.flightRecord)) {
                 state.flightRecord = [];
             }
-            state.flightRecord.push({ id, flightName, departure, destination, date, time });
+            state.flightRecord.push({ id, flightName, departure, origin, destination, date, time, returnFlight });
         },
 
         // Action to delete a flight record by id
@@ -25,22 +25,15 @@ const flightRecordSlice = createSlice({
 
         // Action to update a flight record by id
         updateFlightRecord: (state, action) => {
-            const { id, flightName, departure, destination, date, time } = action.payload;
-            console.log("Action Payload:", action.payload);  // Log action payload for debugging
-        
+            const { id, flightName, departure, origin, destination, date, time, returnFlight } = action.payload;
             const index = state.flightRecord.findIndex(record => record.id === id);
-            console.log("Index of Record to Update:", index);  // Log the index found
-            
             if (index !== -1) {
-                console.log("Updating record at index:", index);  // Confirm that the index is found
-                state.flightRecord[index] = { id, flightName, departure, destination, date, time };
+                state.flightRecord[index] = { id, flightName, departure, origin, destination, date, time, returnFlight };
+             
             } else {
-                console.log("No matching record found for update.");
+                console.error("No matching record found for update.");
             }
         }
-        
-        
-        
         
     }
 });

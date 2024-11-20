@@ -12,8 +12,10 @@ const AddFlightPopup = ({ isPopupOpen, setIsPopupOpen }) => {
     const schema = yup.object().shape({
         flightName: yup.string().required('Flight Name is required'),
         departure: yup.string().required('Departure is required'),
+        returnFlight: yup.string().required('Return Flight is required'),
+        origin: yup.string().required('origin is required'),
         destination: yup.string().required('Destination is required'),
-        date: yup.string().required('Date is required'),
+        // date: yup.string().required('Date is required'),
         time: yup.string().required('Time is required'),
     });
 
@@ -30,15 +32,17 @@ const AddFlightPopup = ({ isPopupOpen, setIsPopupOpen }) => {
                 id: flightData.id,
                 flightName: flightData.flightName,
                 departure: flightData.departure,
+                origin: flightData.origin,
                 destination: flightData.destination,
                 date: flightData.date,
                 time: flightData.time,
+                returnFlight: flightData.returnFlight,
             }));
 
             toast.success("Flight added successfully!", { autoClose: 1000 });
             setIsPopupOpen(false); 
         } catch (err) {
-            toast.error("Flight already exists: ", { autoClose: 1000 });
+            toast.error("Something went wrong: ", { autoClose: 1000 });
         }
     };
 
@@ -77,14 +81,15 @@ const AddFlightPopup = ({ isPopupOpen, setIsPopupOpen }) => {
                                 />
                                 {errors.flightName && <p className="text-red-500 text-sm mt-1">{errors.flightName.message}</p>}
                             </div>
+
                             <div className="mb-4">
-                                <label className="block text-gray-700">Departure</label>
+                                <label className="block text-gray-700">From</label>
                                 <input
-                                    {...register('departure')}
+                                    {...register('origin')}
                                     type="text"
                                     className="w-full p-2 border rounded"
                                 />
-                                {errors.departure && <p className="text-red-500 text-sm mt-1">{errors.departure.message}</p>}
+                                {errors.origin && <p className="text-red-500 text-sm mt-1">{errors.origin.message}</p>}
                             </div>
                             <div className="mb-4">
                                 <label className="block text-gray-700">Destination</label>
@@ -95,7 +100,32 @@ const AddFlightPopup = ({ isPopupOpen, setIsPopupOpen }) => {
                                 />
                                 {errors.destination && <p className="text-red-500 text-sm mt-1">{errors.destination.message}</p>}
                             </div>
+
+
+
+
+
+
                             <div className="mb-4">
+                                <label className="block text-gray-700">Departure</label>
+                                <input
+                                    {...register('departure')}
+                                    type="date"
+                                    className="w-full p-2 border rounded"
+                                />
+                                {errors.departure && <p className="text-red-500 text-sm mt-1">{errors.departure.message}</p>}
+                            </div>
+                            <div className="mb-4">
+                                <label className="block text-gray-700">Return</label>
+                                <input
+                                    {...register('returnFlight')}
+                                    type="date"
+                                    className="w-full p-2 border rounded"
+                                />
+                                {errors.departure && <p className="text-red-500 text-sm mt-1">{errors.returnFlight.message}</p>}
+                            </div>
+                        
+                            {/* <div className="mb-4">
                                 <label className="block text-gray-700">Date</label>
                                 <input
                                     {...register('date')}
@@ -103,7 +133,7 @@ const AddFlightPopup = ({ isPopupOpen, setIsPopupOpen }) => {
                                     className="w-full p-2 border rounded"
                                 />
                                 {errors.date && <p className="text-red-500 text-sm mt-1">{errors.date.message}</p>}
-                            </div>
+                            </div> */}
                             <div className="mb-4">
                                 <label className="block text-gray-700">Time</label>
                                 <input

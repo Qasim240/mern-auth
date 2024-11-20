@@ -8,6 +8,7 @@ const loginUser = require("./routes/loginUserRoute")
 const flightRcord = require("./routes/flightRecordRoute")
 const deletFlight = require("./routes/deleteFlight")
 const auth = require("./middleware/authMiddleware")
+const updatedFlight = require("./routes/updateFlight")
 const config = require('config')
 const app = express();
 const cors = require("cors")
@@ -28,8 +29,9 @@ mongoose.connect("mongodb+srv://muhammadqasim1014:4kExfYf1Vv9qXiDX@cluster0.8edy
 // public Routes
 app.use('/api/register', registerUser);
 app.use('/api/login', loginUser);
-app.use('/api/flightrecord', flightRcord)
+app.use('/api/flightrecord', flightRcord);
 app.use('/api/deleteflight', deletFlight);
+app.use('/api/updatedflight', updatedFlight);
 
 
 // protected Routes
