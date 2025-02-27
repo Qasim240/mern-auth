@@ -24,6 +24,7 @@ const Dashboard = () => {
     const flightsRecords = useSelector((state) => state.flightRecord.flightRecord);
     const hasRecords = flightsRecords?.length > 0;
 
+    const [filteredFlights, setfilteredFlights] = useState(flightsRecords)
     const dispatch = useDispatch();
 
     const [isPopupOpen, setIsPopupOpen] = useState(false);
@@ -72,7 +73,7 @@ const Dashboard = () => {
                         <Greetings />
                         <div className="text-right">
 
-                            <SearchFlight flightsRecords={flightsRecords} />
+                            <SearchFlight flightsRecords={flightsRecords} setfilteredFlights={setfilteredFlights} />
 
                         </div>
 
@@ -100,7 +101,7 @@ const Dashboard = () => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {flightsRecords.map((flight) => (
+                                    {filteredFlights.map((flight) => (
                                         <tr key={flight.id} className="hover:bg-gray-100 transition-all">
                                             <td className="py-2 px-4 border-b">{flight.flightName}</td>
                                             <td className="py-2 px-4 border-b">{flight.origin}</td>
@@ -128,15 +129,15 @@ const Dashboard = () => {
                             </table>
                         )}
 
-                    <div className='flex  items-center justify-end mt-4'>
-                    <DownloadCsv flightsRecords={flightsRecords} hasRecords={hasRecords} />
-                        <button
-                            onClick={handleOpenPopup}
-                            className="px-3 ml-2 py-1 font-bold bg-white text-black rounded transition-all px-4 py-2"
-                        >
-                            Add Flight
-                        </button>
-                    </div>
+                        <div className='flex  items-center justify-end mt-4'>
+                            <DownloadCsv flightsRecords={flightsRecords} hasRecords={hasRecords} />
+                            <button
+                                onClick={handleOpenPopup}
+                                className="px-3 ml-2 py-1 font-bold bg-white text-black rounded transition-all px-4 py-2"
+                            >
+                                Add Flight
+                            </button>
+                        </div>
                         <AddFlightPopup isPopupOpen={isPopupOpen} setIsPopupOpen={setIsPopupOpen} />
 
                         {selectedFlight && (
