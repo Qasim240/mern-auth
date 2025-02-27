@@ -13,6 +13,7 @@ import SignUp from './components/admin/pages/SignUp';
 import Login from './components/admin/pages/Login';
 import Dashboard from './components/admin/pages/Dashboard';
 import ProtectedRoutes from './utils/ProtectedRoutes';
+import Test from './components/admin/pages/Test';
 const App = () => {
   return (
     <>
@@ -20,6 +21,7 @@ const App = () => {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<SignUp />} />
+          <Route path="/test" element={<Test />} />
           <Route path="/login" element={<Login />} />
           {/* protected Routes */}
           <Route element={<ProtectedRoutes />} >

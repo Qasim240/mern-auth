@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+        }
+
+        #total_price {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #333;
+            padding: 10px 20px;
+            background-color: #448e64;
+            color: white;
+            border-radius: 8px;
+        }
+
+        .blog_Wrapper {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .item_card {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 200px;
+            padding: 20px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .item_card:hover {
+            transform: scale(1.05);
+        }
+
+        .item_card h1 {
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .item_card h2 {
+            font-size: 20px;
+            color: #e74c3c;
+            margin-bottom: 15px;
+        }
+
+        .item_card p {
+            font-size: 16px;
+            margin-bottom: 20px;
+            color: #888;
+        }
+
+        .card_btn {
+            background-color: #448e64;
+            color: white;
+            font-size: 16px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .card_btn:hover {
+            background-color: #365e47;
+        }
+    </style>
+</head>
+
+<body>
+    <form action="">
+        <label for="cars">Sort By Rating:</label>
+        <select name="cars" id="rating_from">
+            <option value="5star">5 Star</option>
+            <option value="4star">4 Star</option>
+            <option value="3star">3 Star</option>
+            <option value="2star">2 Star</option>
+            <option value="1star">1 Star</option>
+        </select>
+    </form>
+
+    <h4 id="total_price">Total Price: $0</h4>
+    <div class="blog_Wrapper" id="blog_container">
+
+    </div>
+
+</body>
+
+<script>
+    const dc = 250;
+    let cart = 0;
+    const items = [
+        {
+            id: "1",
+            name: "Wireless Headphones",
+            price: 50,
+            rating: 4.8,
+            dcFree: true,
+        },
+        {
+            id: "2",
+            name: "Air Buds 2",
+            price: 50,
+            rating: 3.8,
+            dcFree: false,
+        },
+        {
+            id: "3",
+            name: "Air Buds 3",
+            price: 50,
+            rating: 5,
+            dcFree: true,
+        },
+        {
+            id: "4",
+            name: "Smartwatch",
+            price: 120,
+            rating: 4.5,
+            dcFree: false,
+        },
+        {
+            id: "5",
+            name: "Gaming Mouse",
+            price: 35,
+            rating: 4.2,
+            dcFree: true,
+        },
+        {
+            id: "6",
+            name: "Bluetooth Speaker",
+            price: 60,
+            rating: 4.7,
+            dcFree: true,
+        },
+        {
+            id: "7",
+            name: "Laptop Stand",
+            price: 20,
+            rating: 4.0,
+            dcFree: false,
+        },
+        {
+            id: "8",
+            name: "Wireless Keyboard",
+            price: 45,
+            rating: 4.3,
+            dcFree: true,
+        },
+        {
+            id: "9",
+            name: "4K Monitor",
+            price: 250,
+            rating: 4.9,
+            dcFree: true,
+        },
+    ];
+
+
+    const blog_container = document.getElementById("blog_container");
+    const total_price = document.getElementById("total_price");
+    const ratingFrom = document.getElementById("rating_from")
+
+    let filteredItem = []
+    ratingFrom.addEventListener("change", function () {
+        const selectedRating = (ratingFrom.value)
+        if (selectedRating === "5star") {
+            const fiveStarRateditems = items.filter((item) => item.rating === 5)
+     
+            fiveStarRateditems.map((item) =>{
+                filteredItem.push(item)
+                console.log("filteredItem", filteredItem)
+                
+            })
+        }
+        if (selectedRating === "4star") {
+            const fourStarRateditems = items.filter((item) => item.rating >= 4 && item.rating < 5)
+        
+
+        }
+        if (selectedRating === "3star") {
+            const threeStarRateditems = items.filter((item) => item.rating >= 3 && item.rating < 4)
+         
+
+        }
+        if (selectedRating === "2star") {
+            const twoStarRateditems = items.filter((item) => item.rating >= 2 && item.rating < 3)
+     
+
+        }
+        if (selectedRating === "1star") {
+            const oneStarRateditems = items.filter((item) => item.rating >= 1 && item.rating < 2)
+     
+        }
+    })
+
+
+
+    function handleProduct(items) {
+        items.forEach((item) => {
+            if (item.rating > 4) item.price += 100;
+            if (item.dcFree === true) item.price += dc;
+
+            const card = document.createElement('div');
+            card.classList.add("item_card");
+            blog_container.appendChild(card);
+
+            card.innerHTML =
+                `<h1>${item.name}</h1>
+                <h2>$${item.price}</h2>
+                <p>Rating: ${item.rating}</p>
+                <button class="card_btn">Add to Cart</button>`;
+
+
+            const cardBtn = card.querySelector(".card_btn");
+            cardBtn.addEventListener("click", () => {
+                const itemValue = JSON.stringify(item);
+                localStorage.setItem(item.id, itemValue);
+                const totalPrice = item.price;
+                cart += totalPrice;
+                localStorage.setItem(item.id, cart);
+                total_price.innerText = `Total Price: $${cart}`;
+                console.log(cart);
+            });
+
+        });
+    }
+
+    handleProduct(items);
+
+
+</script>
+
+</html>

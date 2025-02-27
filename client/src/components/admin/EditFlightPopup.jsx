@@ -40,8 +40,6 @@ const EditFlightPopup = ({ flight, isOpen, onClose, onUpdate }) => {
   };
 
 
-
-
   if (!isVisible) return null;
 
   return (
