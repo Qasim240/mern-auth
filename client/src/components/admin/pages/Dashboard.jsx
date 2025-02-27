@@ -20,6 +20,7 @@ const Dashboard = () => {
     const [deleteFlight] = useDeleteFlightMutation();
     const [updateFlight] = useUpdatedFlightMutation();
 
+
     const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
     const flightsRecords = useSelector((state) => state.flightRecord.flightRecord);
     const hasRecords = flightsRecords?.length > 0;
@@ -64,9 +65,11 @@ const Dashboard = () => {
         }
     };
 
+
     return (
         <div className="bg-gradient-to-r from-blue-500 via-teal-400 to-blue-500 min-h-screen">
             <Navbar />
+            <span>test</span>
             <div className="pt-24 container mx-auto">
                 {isLoggedIn ? (
                     <div>
