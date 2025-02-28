@@ -3,7 +3,6 @@
 
 
 import { useState } from "react";
-import { useSelector } from "react-redux";
 
 const SearchFlight = ({ flightsRecords, setfilteredFlights }) => {
     const [searchvalue, setSearchvalue] = useState("")
@@ -17,7 +16,7 @@ const SearchFlight = ({ flightsRecords, setfilteredFlights }) => {
     }
     return (
         <div>
-            <div className="flex items-center justify-end p-4">
+            <div className="flex items-center justify-end">
                 <div className="relative w-full max-w-md">
                     <input
                         onChange={SearchFlightHanlder}

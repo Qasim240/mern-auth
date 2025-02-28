@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {
     useFlightRecordMutation,
@@ -14,6 +14,7 @@ import Greetings from '../../../utils/Greetings';
 import { handleDeleteFlight } from '../../../utils/DeleteFlight';
 import DownloadCsv from '../DownloadCsv';
 import SearchFlight from '../../SearchFlight';
+import RangeFilter from '../../RangeFilter';
 
 const Dashboard = () => {
     const [{ isLoading }] = useFlightRecordMutation();
@@ -39,6 +40,12 @@ const Dashboard = () => {
         setSelectedFlight(flight);
         setIsEditPopupOpen(true);
     };
+
+
+    useEffect(() => {
+        setfilteredFlights(flightsRecords)
+    }, [flightsRecords])
+
 
     const handleUpdateFlight = async (updatedFlight) => {
         try {
@@ -76,7 +83,10 @@ const Dashboard = () => {
                         <Greetings />
                         <div className="text-right">
 
-                            <SearchFlight flightsRecords={flightsRecords} setfilteredFlights={setfilteredFlights} />
+                           <div className='flex items-end justify-between mb-3'>
+                           <RangeFilter />
+                           <SearchFlight flightsRecords={flightsRecords} setfilteredFlights={setfilteredFlights} />
+                           </div>
 
                         </div>
 
@@ -159,5 +169,8 @@ const Dashboard = () => {
         </div>
     );
 };
+
+
+
 
 export default Dashboard;
