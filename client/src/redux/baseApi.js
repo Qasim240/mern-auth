@@ -18,7 +18,7 @@ export const baseApi = createApi({
       const token = user ? user.token : null; // Get token if user exists
 
       if (token) {
-        console.log('Token:', token); // Log token for debugging
+        console.log('Token is inside baseapi.js'); // Log token for debugging
         headers.set('x-auth-key', `${token}`); // Set the token in the header
       } else {
         console.log('No token available');
@@ -54,4 +54,5 @@ export const {
   useFlightRecordMutation,
   useDeleteFlightMutation,
   useUpdatedFlightMutation,
+  useUploadBulkFileMutation,
 } = baseApi;

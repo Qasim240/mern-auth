@@ -7,6 +7,7 @@ const registerUser = require('./routes/registerUserRoute')
 const loginUser = require("./routes/loginUserRoute")
 const flightRcord = require("./routes/flightRecordRoute")
 const deletFlight = require("./routes/deleteFlight")
+const uploadBulkFile = require("./routes/uploadBulkFile")
 const auth = require("./middleware/authMiddleware")
 const updatedFlight = require("./routes/updateFlight")
 const config = require('config')
@@ -32,6 +33,7 @@ app.use('/api/login', loginUser);
 app.use('/api/flightrecord', flightRcord);
 app.use('/api/deleteflight', deletFlight);
 app.use('/api/updatedflight', updatedFlight);
+app.use('/api/uploadBulkFile', uploadBulkFile)
 
 
 // protected Routes

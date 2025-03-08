@@ -3,17 +3,37 @@
 
 
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
-const RangeFilter = () => {
-    const [startDate, setStartDate] = useState();
-
+const RangeFilter = ({ flightsRecords, setDateFilteredFlights }) => {
+    const [startDate, setStartDate] = useState("");
+    const [toDate, setToDate] = useState("");
 
     const startDateHandler = (e) => {
         const startDateValue = e.target.value;
         setStartDate(startDateValue)
-        console.log("startDate", startDate)
+        // console.log("From", startDate)
+
     }
+    const toDateHandler = (e) => {
+        const toDateValue = e.target.value;
+        setToDate(toDateValue)
+        // console.log("To", toDate)
+    }
+
+    useEffect(() => {
+        if (startDate && toDate) {
+            const datedFilter = flightsRecords?.filter((flight) =>
+                new Date(flight.departure) >= new Date(startDate) &&
+                new Date(flight.departure) <= new Date(toDate));
+            setDateFilteredFlights(datedFilter)
+
+        } else {
+            setDateFilteredFlights(flightsRecords);
+        }
+
+
+    }, [startDate, toDate, flightsRecords])
 
 
     return (
@@ -32,6 +52,8 @@ const RangeFilter = () => {
 
             <div className="flex flex-col gap-1">
                 <input
+                    onChange={toDateHandler}
+                    value={toDate}
                     type="date"
                     className="text-[12px] font-medium bg-gray-100 text-gray-700 rounded-lg px-3 py-1 focus:ring-2 focus:ring-blue-400 focus:outline-none transition-all hover:bg-gray-200"
                 />

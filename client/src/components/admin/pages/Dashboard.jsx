@@ -15,6 +15,7 @@ import { handleDeleteFlight } from '../../../utils/DeleteFlight';
 import DownloadCsv from '../DownloadCsv';
 import SearchFlight from '../../SearchFlight';
 import RangeFilter from '../../RangeFilter';
+import BulkFileUpload from '../../BulkFileUpload';
 
 const Dashboard = () => {
     const [{ isLoading }] = useFlightRecordMutation();
@@ -27,7 +28,9 @@ const Dashboard = () => {
     const hasRecords = flightsRecords?.length > 0;
 
     const [filteredFlights, setfilteredFlights] = useState(flightsRecords)
+    const [dateFilteredFlights, setDateFilteredFlights] = useState(flightsRecords);
     const dispatch = useDispatch();
+    console.log("dateFilteredFlights", dateFilteredFlights)
 
     const [isPopupOpen, setIsPopupOpen] = useState(false);
     const [isEditPopupOpen, setIsEditPopupOpen] = useState(false);
@@ -45,6 +48,11 @@ const Dashboard = () => {
     useEffect(() => {
         setfilteredFlights(flightsRecords)
     }, [flightsRecords])
+
+    useEffect(() => {
+        setfilteredFlights(dateFilteredFlights);
+    }, [dateFilteredFlights]);
+
 
 
     const handleUpdateFlight = async (updatedFlight) => {
@@ -83,10 +91,10 @@ const Dashboard = () => {
                         <Greetings />
                         <div className="text-right">
 
-                           <div className='flex items-end justify-between mb-3'>
-                           <RangeFilter />
-                           <SearchFlight flightsRecords={flightsRecords} setfilteredFlights={setfilteredFlights} />
-                           </div>
+                            <div className='flex items-end justify-between mb-3'>
+                                <RangeFilter flightsRecords={flightsRecords} setDateFilteredFlights={setDateFilteredFlights} />
+                                <SearchFlight flightsRecords={flightsRecords} setfilteredFlights={setfilteredFlights} />
+                            </div>
 
                         </div>
 
@@ -150,9 +158,10 @@ const Dashboard = () => {
                             >
                                 Add Flight
                             </button>
+                            <BulkFileUpload />
                         </div>
                         <AddFlightPopup isPopupOpen={isPopupOpen} setIsPopupOpen={setIsPopupOpen} />
-
+                        
                         {selectedFlight && (
                             <EditFlightPopup
                                 isOpen={isEditPopupOpen}

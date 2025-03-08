@@ -1,5 +1,8 @@
 // src/redux/api/apiEndpoints.js
 
+
+
+
 export const apiEndpoints = {
   signUp: {
     url: 'register',
@@ -23,6 +26,10 @@ export const apiEndpoints = {
   updatedFlight: {
     url: 'updatedflight/:id',
     method: 'PUT'
+  },
+  uploadBulkFile: {
+    url: 'uploadBulkFile',
+    method: 'POST'
   }
-  
+
 };
