@@ -11,6 +11,7 @@ const uploadBulkFile = require("./routes/uploadBulkFile")
 const auth = require("./middleware/authMiddleware")
 const updatedFlight = require("./routes/updateFlight")
 const config = require('config')
+
 const app = express();
 const cors = require("cors")
 
