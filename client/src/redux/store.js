@@ -20,7 +20,7 @@ const persistConfig = {
 const rootReducer = combineReducers({
   [baseApi.reducerPath]: baseApi.reducer,
   user: userReducer,
-  flightRecord: flightRecordReducer,  // Add the flightRecord reducer here
+  flightRecord: flightRecordReducer, 
   testUser: testUserReducer
 });
 

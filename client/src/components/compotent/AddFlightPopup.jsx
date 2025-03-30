@@ -23,28 +23,46 @@ const AddFlightPopup = ({ isPopupOpen, setIsPopupOpen }) => {
     const [flightRecord, { isLoading }] = useFlightRecordMutation();
     const dispatch = useDispatch();
 
-    const handleSubmitFlight = async (data) => {
+    const fileUploadHandler = async () => {
+        if (!selectedFile) {
+            console.log("No file selected");
+            return;
+        }
+    
+        const formData = new FormData();
+        formData.append("file", selectedFile);
+    
         try {
-            const response = await flightRecord(data).unwrap();
-            const flightData = response.data;
-
-            dispatch(setFlightRecord({
-                id: flightData.id,
-                flightName: flightData.flightName,
-                departure: flightData.departure,
-                origin: flightData.origin,
-                destination: flightData.destination,
-                date: flightData.date,
-                time: flightData.time,
-                returnFlight: flightData.returnFlight,
-            }));
-
-            toast.success("Flight added successfully!", { autoClose: 1000 });
-            setIsPopupOpen(false); 
+            console.log("testing in tryCatch");
+            const response = await uploadBulkFile(formData).unwrap();
+    
+            // Extract inserted flights array
+            const flightData = response?.insertedFlights; 
+    
+            if (flightData && flightData.length > 0) {
+                const flight = flightData[0]; // Get the first flight
+    
+                dispatch(setFlightRecord({
+                    id: flight.id,
+                    flightName: flight.flightName,
+                    departure: flight.departure,
+                    origin: flight.origin,
+                    destination: flight.destination,
+                    date: flight.date,
+                    time: flight.time,
+                    returnFlight: flight.returnFlight,
+                }));
+    
+                console.log("Success:", JSON.stringify(flight));
+            } else {
+                console.log("No flights inserted.");
+            }
+    
         } catch (err) {
-            toast.error("Something went wrong: ", { autoClose: 1000 });
+            console.log("API Error:", err);
         }
     };
+    
 
     return (
         <>
