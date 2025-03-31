@@ -76,10 +76,11 @@ router.post("/", upload.single("file"), async (req, res) => {
                 fs.unlink(req.file.path, (err) => {
                     if (err) console.error("Failed to delete file:", err);
                 });
-
+                console.log(insertedFlights)
                 return res.status(201).json({
                     message: "File processed successfully",
-                    insertedFlights, 
+
+                    insertedFlights,
                     errors
                 });
             });

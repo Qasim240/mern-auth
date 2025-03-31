@@ -11,40 +11,49 @@ const BulkFileUpload = () => {
     };
 
     const fileUploadHandler = async () => {
-
         if (!selectedFile) {
             console.log("No file selected");
             return;
         }
+    
         const formData = new FormData();
         formData.append("file", selectedFile);
-
-
+    
         try {
-            console.log("testing in tryCatch")
+            console.log("Uploading file...");
             const response = await uploadBulkFile(formData).unwrap();
-            const flightData = response.data
-            console.log("flightData", flightData)
-            dispatch(setFlightRecord({
-                flightName:flightData.flightName,
-                id: flightData.id,
-                flightName: flightData.flightName,
-                departure: flightData.departure,
-                origin: flightData.origin,
-                destination: flightData.destination,
-                date: flightData.date,
-                time: flightData.time,
-                returnFlight: flightData.returnFlight,
-            }))
-
-
-
-
-            console.log("Success:", JSON.stringify(response.data.insertedFlights));
+            
+            console.log("Response from API:", response); // Debugging step
+    
+            // Extract inserted flight records
+            const flightData = response.data.insertedFlights; // Optional chaining to avoid undefined errors
+            console.log("Flights inserted:", flightData); // Debugging step
+            if (Array.isArray(flightData) && flightData.length > 0) {
+             
+                
+                flightData.forEach((flight) => {
+                    dispatch(setFlightRecord({
+                        id: flight._id,  // Correctly use _id from MongoDB
+                        flightName: flight.flightName,
+                        departure: flight.departure,
+                        origin: flight.origin,
+                        destination: flight.destination,
+                        date: flight.date,
+                        time: flight.time,
+                        returnFlight: flight.returnFlight,
+                    }));
+                });
+    
+                console.log("Flight records added to Redux store.");
+            } else {
+                console.warn("No new flights were inserted.");
+            }
         } catch (err) {
-            console.log("API Error:", err);
+            console.error("API Error:", err);
         }
     };
+    
+
 
     return (
         <>

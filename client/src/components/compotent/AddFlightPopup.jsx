@@ -23,46 +23,59 @@ const AddFlightPopup = ({ isPopupOpen, setIsPopupOpen }) => {
     const [flightRecord, { isLoading }] = useFlightRecordMutation();
     const dispatch = useDispatch();
 
-    const fileUploadHandler = async () => {
-        if (!selectedFile) {
-            console.log("No file selected");
-            return;
-        }
-    
-        const formData = new FormData();
-        formData.append("file", selectedFile);
-    
+    // const handleSubmitFlight = async (data) => {
+    //     try {
+    //         const response = await flightRecord(data).unwrap();
+    //         const flight = response.data
+    //         dispatch(setFlightRecord({
+    //             id: flight.id,
+    //             flightName: flight.flightName,
+    //             departure: flight.departure,
+    //             origin: flight.origin,
+    //             date: flight.date,
+    //             time: flight.time,
+    //             returnFlight: flight.returnFlight,
+    //         }))
+    //         setIsPopupOpen(false)
+    //     } catch (error) {
+    //         console.error("sinlge Flight API Error:", err);
+    //     }
+    // };
+
+
+    const handleSubmitFlight = async (data) => {
         try {
-            console.log("testing in tryCatch");
-            const response = await uploadBulkFile(formData).unwrap();
-    
-            // Extract inserted flights array
-            const flightData = response?.insertedFlights; 
-    
-            if (flightData && flightData.length > 0) {
-                const flight = flightData[0]; // Get the first flight
-    
-                dispatch(setFlightRecord({
-                    id: flight.id,
-                    flightName: flight.flightName,
-                    departure: flight.departure,
-                    origin: flight.origin,
-                    destination: flight.destination,
-                    date: flight.date,
-                    time: flight.time,
-                    returnFlight: flight.returnFlight,
-                }));
-    
-                console.log("Success:", JSON.stringify(flight));
-            } else {
-                console.log("No flights inserted.");
-            }
-    
+            const response = await flightRecord(data).unwrap();
+            const flightData = response.data
+
+            dispatch(setFlightRecord({
+                id: flightData.id,
+                flightName: flightData.flightName,
+                departure: flightData.departure,
+                destination: flightData.destination,
+                date: flightData.date,
+                time: flightData.time,
+                returnFlight: flightData.returnFlight,
+            }))
+
+            toast.success("Flight added successfully!", { autoClose: 1000 });
+            setIsPopupOpen(false); 
         } catch (err) {
-            console.log("API Error:", err);
+            toast.error("Flight already exists: ", { autoClose: 1000 });
         }
     };
-    
+
+
+
+
+
+
+
+
+
+
+
+
 
     return (
         <>
@@ -142,7 +155,7 @@ const AddFlightPopup = ({ isPopupOpen, setIsPopupOpen }) => {
                                 />
                                 {errors.departure && <p className="text-red-500 text-sm mt-1">{errors.returnFlight.message}</p>}
                             </div>
-                        
+
                             {/* <div className="mb-4">
                                 <label className="block text-gray-700">Date</label>
                                 <input
