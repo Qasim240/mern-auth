@@ -156,12 +156,26 @@ const Dashboard = () => {
                                 onClick={handleOpenPopup}
                                 className="px-3 ml-2 py-1 font-bold bg-white text-black rounded transition-all px-4 py-2"
                             >
-                                Add Flight
+                                <div className='flex items-center'>
+                                    <span>Add New Flight</span>
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        viewBox="0 0 24 24"
+                                        fill="currentColor"
+                                        width="24"
+                                        height="24"
+                                    >
+                                        <path
+                                            d="M12 4a1 1 0 0 1 1 1v6h6a1 1 0 1 1 0 2h-6v6a1 1 0 1 1-2 0v-6H5a1 1 0 1 1 0-2h6V5a1 1 0 0 1 1-1z"
+                                        />
+                                    </svg>
+                                </div>
+
                             </button>
                             <BulkFileUpload />
                         </div>
                         <AddFlightPopup isPopupOpen={isPopupOpen} setIsPopupOpen={setIsPopupOpen} />
-                        
+
                         {selectedFlight && (
                             <EditFlightPopup
                                 isOpen={isEditPopupOpen}

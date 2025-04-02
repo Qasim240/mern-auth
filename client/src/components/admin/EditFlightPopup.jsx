@@ -65,36 +65,9 @@ const EditFlightPopup = ({ flight, isOpen, onClose, onUpdate }) => {
               className="block w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
             />
           </div>
-
-          {/* Departure Date */}
-          <div>
-            <label className="block text-gray-700 font-medium mb-2">Departure Date</label>
-            <input
-              type="date"
-              name="departure"
-              value={updatedFlight.departure || ''}
-              onChange={handleChange}
-              className="block w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
-            />
-          </div>
-
-       
-          {/* Return Flight */}
-          <div>
-            <label className="block text-gray-700 font-medium mb-2">Return Date</label>
-            <input
-              type="date"
-              name="returnFlight"
-              value={updatedFlight.returnFlight || ''}
-              onChange={handleChange}
-              className="block w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
-            />
-          </div>
-
-
           {/* origin */}
           <div>
-            <label className="block text-gray-700 font-medium mb-2">Origin</label>
+            <label className="block text-gray-700 font-medium mb-2">From</label>
             <input
               type="text"
               name="origin"
@@ -104,7 +77,6 @@ const EditFlightPopup = ({ flight, isOpen, onClose, onUpdate }) => {
               className="block w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
             />
           </div>
-
           {/* Destination */}
           <div>
             <label className="block text-gray-700 font-medium mb-2">Destination</label>
@@ -117,6 +89,31 @@ const EditFlightPopup = ({ flight, isOpen, onClose, onUpdate }) => {
               className="block w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
             />
           </div>
+          {/* Departure Date */}
+          <div>
+            <label className="block text-gray-700 font-medium mb-2">Departure Date</label>
+            <input
+              type="date"
+              name="departure"
+              value={updatedFlight.departure || ''}
+              onChange={handleChange}
+              className="block w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
+            />
+          </div>
+
+
+          {/* Return Flight */}
+          <div>
+            <label className="block text-gray-700 font-medium mb-2">Return Date</label>
+            <input
+              type="date"
+              name="returnFlight"
+              value={updatedFlight.returnFlight || ''}
+              onChange={handleChange}
+              className="block w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
+            />
+          </div>
+
 
 
           {/* Flight Time */}

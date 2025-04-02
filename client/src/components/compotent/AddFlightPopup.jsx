@@ -23,24 +23,6 @@ const AddFlightPopup = ({ isPopupOpen, setIsPopupOpen }) => {
     const [flightRecord, { isLoading }] = useFlightRecordMutation();
     const dispatch = useDispatch();
 
-    // const handleSubmitFlight = async (data) => {
-    //     try {
-    //         const response = await flightRecord(data).unwrap();
-    //         const flight = response.data
-    //         dispatch(setFlightRecord({
-    //             id: flight.id,
-    //             flightName: flight.flightName,
-    //             departure: flight.departure,
-    //             origin: flight.origin,
-    //             date: flight.date,
-    //             time: flight.time,
-    //             returnFlight: flight.returnFlight,
-    //         }))
-    //         setIsPopupOpen(false)
-    //     } catch (error) {
-    //         console.error("sinlge Flight API Error:", err);
-    //     }
-    // };
 
 
     const handleSubmitFlight = async (data) => {
@@ -51,6 +33,7 @@ const AddFlightPopup = ({ isPopupOpen, setIsPopupOpen }) => {
             dispatch(setFlightRecord({
                 id: flightData.id,
                 flightName: flightData.flightName,
+                origin: flightData.origin,
                 departure: flightData.departure,
                 destination: flightData.destination,
                 date: flightData.date,
@@ -64,15 +47,6 @@ const AddFlightPopup = ({ isPopupOpen, setIsPopupOpen }) => {
             toast.error("Flight already exists: ", { autoClose: 1000 });
         }
     };
-
-
-
-
-
-
-
-
-
 
 
 
