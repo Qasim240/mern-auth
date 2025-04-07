@@ -18,6 +18,7 @@ router.put('/:id', async (req, res) => {
           flightName: req.body.flightName,
           departure: req.body.departure,
           origin: req.body.origin,
+          stop: req.body.stop,
           destination: req.body.destination,
           date: req.body.date,
           time: req.body.time,

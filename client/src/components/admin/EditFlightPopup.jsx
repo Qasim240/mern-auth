@@ -77,6 +77,21 @@ const EditFlightPopup = ({ flight, isOpen, onClose, onUpdate }) => {
               className="block w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
             />
           </div>
+
+          {/* stop */}
+          <div>
+            <label className="block text-gray-700 font-medium mb-2">Stop</label>
+            <input
+              type="text"
+              name="stop"
+              value={updatedFlight.stop || ''}
+              onChange={handleChange}
+              placeholder="Enter stopover location"
+              className="block w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
+            />
+          </div>
+
+
           {/* Destination */}
           <div>
             <label className="block text-gray-700 font-medium mb-2">Destination</label>

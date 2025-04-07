@@ -14,6 +14,7 @@ const AddFlightPopup = ({ isPopupOpen, setIsPopupOpen }) => {
         departure: yup.string().required('Departure is required'),
         returnFlight: yup.string().required('Return Flight is required'),
         origin: yup.string().required('origin is required'),
+        stop: yup.string().required('stop is required'),
         destination: yup.string().required('Destination is required'),
         // date: yup.string().required('Date is required'),
         time: yup.string().required('Time is required'),
@@ -34,6 +35,7 @@ const AddFlightPopup = ({ isPopupOpen, setIsPopupOpen }) => {
                 id: flightData.id,
                 flightName: flightData.flightName,
                 origin: flightData.origin,
+                stop: flightData.stop,
                 departure: flightData.departure,
                 destination: flightData.destination,
                 date: flightData.date,
@@ -47,8 +49,6 @@ const AddFlightPopup = ({ isPopupOpen, setIsPopupOpen }) => {
             toast.error("Flight already exists: ", { autoClose: 1000 });
         }
     };
-
-
 
 
     return (
@@ -96,6 +96,25 @@ const AddFlightPopup = ({ isPopupOpen, setIsPopupOpen }) => {
                                 />
                                 {errors.origin && <p className="text-red-500 text-sm mt-1">{errors.origin.message}</p>}
                             </div>
+
+
+
+                            <div className="mb-4">
+                                <label className="block text-gray-700">stop</label>
+                                <input
+                                    {...register('stop')}
+                                    type="text"
+                                    className="w-full p-2 border rounded"
+                                />
+                                {errors.stop && <p className="text-red-500 text-sm mt-1">{errors.stop.message}</p>}
+                            </div>
+
+
+
+
+
+
+
                             <div className="mb-4">
                                 <label className="block text-gray-700">Destination</label>
                                 <input

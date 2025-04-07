@@ -57,6 +57,7 @@ const Dashboard = () => {
 
     const handleUpdateFlight = async (updatedFlight) => {
         try {
+            console.log("Sending to backend:", updatedFlight);
             const response = await updateFlight(updatedFlight).unwrap();
             if (response?.data?._id) {
                 dispatch(
@@ -66,6 +67,7 @@ const Dashboard = () => {
                         departure: response.data.departure,
                         returnFlight: response.data.returnFlight,
                         origin: response.data.origin,
+                        stop: response.data.stop,
                         destination: response.data.destination,
                         date: response.data.date,
                         time: response.data.time,
@@ -114,7 +116,8 @@ const Dashboard = () => {
                                     <tr>
                                         <th className="py-2 px-4 border-b text-left">Flight Name</th>
                                         <th className="py-2 px-4 border-b text-left">From</th>
-                                        <th className="py-2 px-4 border-b text-left">Destination</th>
+                                        <th className="py-2 px-4 border-b text-left">to</th>
+                                        <th className="py-2 px-4 border-b text-left">Stop</th>
                                         <th className="py-2 px-4 border-b text-left">Departure</th>
                                         <th className="py-2 px-4 border-b text-left">Return</th>
                                         <th className="py-2 px-4 border-b text-left">Time</th>
@@ -127,6 +130,7 @@ const Dashboard = () => {
                                             <td className="py-2 px-4 border-b">{flight.flightName}</td>
                                             <td className="py-2 px-4 border-b">{flight.origin}</td>
                                             <td className="py-2 px-4 border-b">{flight.destination}</td>
+                                            <td className="py-2 px-4 border-b">{flight.stop}</td>
                                             <td className="py-2 px-4 border-b">{flight.departure}</td>
                                             <td className="py-2 px-4 border-b">{flight.returnFlight}</td>
                                             <td className="py-2 px-4 border-b">{flight.time}</td>

@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useUploadBulkFileMutation } from '../redux/baseApi';
 import { setFlightRecord } from '../redux/slices/flightRecordSlice';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 const BulkFileUpload = () => {
+    const flightsRecords = useSelector((state) => state.flightRecord.flightRecord);
     const [uploadBulkFile, { isLoading, error }] = useUploadBulkFileMutation();
     const [selectedFile, setSelectedFile] = useState(null);
     const dispatch = useDispatch()
@@ -36,6 +37,7 @@ const BulkFileUpload = () => {
                         flightName: flight.flightName,
                         departure: flight.departure,
                         origin: flight.origin,
+                        stop: flight.stop,
                         destination: flight.destination,
                         date: flight.date,
                         time: flight.time,

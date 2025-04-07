@@ -18,6 +18,10 @@ const flightDetails = mongoose.model('flightDetails', new mongoose.Schema({
         type: String,
         required: true
     },
+    stop: {
+        type: String,
+        required: true
+    },
     destination: {
         type: String,
         required: true
@@ -39,6 +43,7 @@ function flightDetailsValidation(flightDetails) {
         departure: Joi.string().required(),
         returnFlight: Joi.string().isoDate().required(),
         origin: Joi.string().required(),
+        stop: Joi.string().required(),
         destination: Joi.string().required(),
         date: Joi.date(),
         time: Joi.string().required(),
