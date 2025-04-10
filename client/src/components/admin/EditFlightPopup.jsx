@@ -13,39 +13,34 @@ const EditFlightPopup = ({ flight, isOpen, onClose, onUpdate }) => {
     }
   }, [isOpen]);
 
-
-
   useEffect(() => {
     if (isOpen && flight) {
       setUpdatedFlight({ ...flight });
     }
   }, [flight, isOpen]);
 
-
   const handleChange = (e) => {
     const { name, value } = e.target;
     setUpdatedFlight({ ...updatedFlight, [name]: value });
-    console.log(value)
-
+   
   };
 
   const handleSubmit = () => {
-    console.log("Updated Flight Data:", updatedFlight);
+    console.log("Updated Flight Data before:", updatedFlight);
     if (updatedFlight.id) {
       onUpdate(updatedFlight);
-      console.log("updated Flight here", updatedFlight)
+      console.log("adult fare", updatedFlight.adult_fare);
     } else {
       console.error("No flight ID found for update.");
     }
   };
 
-
   if (!isVisible) return null;
 
   return (
-    <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center z-[9999]">
+    <div className="absolute inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center z-[9999]">
       <div
-        className="bg-white p-8 rounded-xl shadow-xl transform transition-all duration-500 ease-out max-w-3xl w-full"
+        className="bg-white p-8 rounded-xl shadow-xl transform transition-all duration-500 ease-out max-w-3xl w-full h-[800px] overflow-auto"
         style={{
           transform: isOpen ? 'translateY(0)' : 'translateY(100%)',
           opacity: isOpen ? 1 : 0,
@@ -65,7 +60,8 @@ const EditFlightPopup = ({ flight, isOpen, onClose, onUpdate }) => {
               className="block w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
             />
           </div>
-          {/* origin */}
+
+          {/* Origin */}
           <div>
             <label className="block text-gray-700 font-medium mb-2">From</label>
             <input
@@ -77,20 +73,6 @@ const EditFlightPopup = ({ flight, isOpen, onClose, onUpdate }) => {
               className="block w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
             />
           </div>
-
-          {/* stop */}
-          <div>
-            <label className="block text-gray-700 font-medium mb-2">Stop</label>
-            <input
-              type="text"
-              name="stop"
-              value={updatedFlight.stop || ''}
-              onChange={handleChange}
-              placeholder="Enter stopover location"
-              className="block w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
-            />
-          </div>
-
 
           {/* Destination */}
           <div>
@@ -104,6 +86,34 @@ const EditFlightPopup = ({ flight, isOpen, onClose, onUpdate }) => {
               className="block w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
             />
           </div>
+
+          {/* Stopover */}
+          <div>
+            <label className="block text-gray-700 font-medium mb-2">Stop</label>
+            <input
+              type="text"
+              name="stop"
+              value={updatedFlight.stop || ''}
+              onChange={handleChange}
+              placeholder="Enter stopover location"
+              className="block w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
+            />
+          </div>
+
+          {/* Flight Class */}
+          <select
+            name="flight_class"
+            value={updatedFlight.flight_class || ''}
+            onChange={handleChange}
+            className="w-full p-2 border rounded"
+          >
+            <option value="" disabled>Select a class</option>
+            <option value="Premium Economy">Premium Economy</option>
+            <option value="Economy">Economy</option>
+            <option value="Business Class">Business Class</option>
+            <option value="First Class">First Class</option>
+          </select>
+
           {/* Departure Date */}
           <div>
             <label className="block text-gray-700 font-medium mb-2">Departure Date</label>
@@ -116,8 +126,7 @@ const EditFlightPopup = ({ flight, isOpen, onClose, onUpdate }) => {
             />
           </div>
 
-
-          {/* Return Flight */}
+          {/* Return Date */}
           <div>
             <label className="block text-gray-700 font-medium mb-2">Return Date</label>
             <input
@@ -129,7 +138,18 @@ const EditFlightPopup = ({ flight, isOpen, onClose, onUpdate }) => {
             />
           </div>
 
-
+          {/* Adult Fare */}
+          <div>
+            <label className="block text-gray-700 font-medium mb-2">Adult Fare</label>
+            <input
+              type="text"
+              name="adult_fare"
+              value={updatedFlight.adult_fare || ''}
+              onChange={handleChange}
+              placeholder="Enter adult fare"
+              className="block w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
+            />
+          </div>
 
           {/* Flight Time */}
           <div>

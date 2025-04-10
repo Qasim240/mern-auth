@@ -18,6 +18,8 @@ const AddFlightPopup = ({ isPopupOpen, setIsPopupOpen }) => {
         destination: yup.string().required('Destination is required'),
         // date: yup.string().required('Date is required'),
         time: yup.string().required('Time is required'),
+        flight_class: yup.string().required('Flight Class is required'),
+        adult_fare: yup.string().required(' Adult fare is Required')
     });
 
     const { register, handleSubmit, formState: { errors } } = useForm({ resolver: yupResolver(schema) });
@@ -41,10 +43,12 @@ const AddFlightPopup = ({ isPopupOpen, setIsPopupOpen }) => {
                 date: flightData.date,
                 time: flightData.time,
                 returnFlight: flightData.returnFlight,
+                flight_class: flightData.flight_class,
+                adult_fare: flightData.adult_fare
             }))
 
             toast.success("Flight added successfully!", { autoClose: 1000 });
-            setIsPopupOpen(false); 
+            setIsPopupOpen(false);
         } catch (err) {
             toast.error("Flight already exists: ", { autoClose: 1000 });
         }
@@ -111,9 +115,35 @@ const AddFlightPopup = ({ isPopupOpen, setIsPopupOpen }) => {
 
 
 
+                            <div className="mb-4">
+                                <label className="block text-gray-700">Class</label>
+                                <select
+                                    {...register('flight_class')}
+                                    className="w-full p-2 border rounded"
+                                    defaultValue=""
+                                >
+                                    <option value="" disabled>Select a class</option>
+                                    <option value="Premium Economy">Premium Economy</option>
+                                    <option value="Economy">Economy</option>
+                                    <option value="Business Class">Business Class</option>
+                                    <option value="First Class">First Class</option>
+                                </select>
+                                {errors.flight_class && (
+                                    <p className="text-red-500 text-sm mt-1">{errors.flight_class.message}</p>
+                                )}
+                            </div>
 
 
 
+                            <div className="mb-4">
+                                <label className="block text-gray-700">Adult fare</label>
+                                <input
+                                    {...register('adult_fare')}
+                                    type="number"
+                                    className="w-full p-2 border rounded"
+                                />
+                                {errors.adult_fare && <p className="text-red-500 text-sm mt-1">{errors.adult_fare.message}</p>}
+                            </div>
 
                             <div className="mb-4">
                                 <label className="block text-gray-700">Destination</label>

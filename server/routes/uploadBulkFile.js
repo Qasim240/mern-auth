@@ -54,7 +54,8 @@ router.post("/", upload.single("file"), async (req, res) => {
                         destination: row.destination,
                         date: row.date,
                         time: row.time,
-                        returnFlight: row.returnFlight
+                        returnFlight: row.returnFlight,
+                        adult_fare: row.adult_fare,
                     });
 
                     if (!existingFlight) {
@@ -66,7 +67,8 @@ router.post("/", upload.single("file"), async (req, res) => {
                             destination: row.destination,
                             date: row.date,
                             time: row.time,
-                            returnFlight: row.returnFlight
+                            returnFlight: row.returnFlight,
+                            adult_fare: row.adult_fare,
                         });
 
                         await newFlight.save();

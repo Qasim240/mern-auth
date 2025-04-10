@@ -9,7 +9,7 @@ const DownloadCsv = ({ flightsRecords, hasRecords }) => {
       return;
     }
 
-    const CsvHeader = ["Flight Name", "From", "Destination", "Departure", "Return", "Time"];
+    const CsvHeader = ["Flight Name", "From", "Destination", "Departure", "Return", "Time", "stop", "adult fare" ];
     const csvRows = [CsvHeader.join(",")];
 
     flightsRecords.forEach((flight) => {
@@ -19,7 +19,9 @@ const DownloadCsv = ({ flightsRecords, hasRecords }) => {
         flight.destination,
         flight.departure,
         flight.returnFlight,
-        flight.time
+        flight.time,
+        flight.stop,
+        flight.adult_flight
       ].join(",");
       csvRows.push(row);
     });

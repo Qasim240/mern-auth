@@ -18,7 +18,9 @@ router.post('/', async (req, res) => {
             destination: req.body.destination,
             date: req.body.date,
             time: req.body.time,
-            returnFlight: req.body.returnFlight
+            returnFlight: req.body.returnFlight,
+            flight_class: req.body.flight_class,
+            adult_fare: req.body.adult_fare
         });
 
         if (flight) return res.status(403).send("Flight Already Exists");
@@ -31,7 +33,9 @@ router.post('/', async (req, res) => {
             destination: req.body.destination,
             date: req.body.date,
             time: req.body.time,
-            returnFlight: req.body.returnFlight
+            returnFlight: req.body.returnFlight,
+            flight_class: req.body.flight_class,
+            adult_fare: req.body.adult_fare
         });
 
         await flight.save();
@@ -45,7 +49,9 @@ router.post('/', async (req, res) => {
             destination: flight.destination,
             date: flight.date,
             time: flight.time,
-            returnFlight: req.body.returnFlight
+            returnFlight: req.body.returnFlight,
+            flight_class: req.body.flight_class,
+            adult_fare: req.body.adult_fare
         });
     } catch (ex) {
         console.error("Error", ex);

@@ -23,6 +23,8 @@ router.put('/:id', async (req, res) => {
           date: req.body.date,
           time: req.body.time,
           returnFlight: req.body.returnFlight,
+          flight_class: req.body.flight_class,
+          adult_fare: req.body.adult_fare,
         },
         { new: true }
       );

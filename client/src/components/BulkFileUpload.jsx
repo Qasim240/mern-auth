@@ -42,6 +42,8 @@ const BulkFileUpload = () => {
                         date: flight.date,
                         time: flight.time,
                         returnFlight: flight.returnFlight,
+                        flight_class: flight.flight_class,
+                        adult_fare: flight.adult_fare,
                     }));
                 });
 

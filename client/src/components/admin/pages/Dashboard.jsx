@@ -30,7 +30,7 @@ const Dashboard = () => {
     const [filteredFlights, setfilteredFlights] = useState(flightsRecords)
     const [dateFilteredFlights, setDateFilteredFlights] = useState(flightsRecords);
     const dispatch = useDispatch();
-    console.log("dateFilteredFlights", dateFilteredFlights)
+
 
     const [isPopupOpen, setIsPopupOpen] = useState(false);
     const [isEditPopupOpen, setIsEditPopupOpen] = useState(false);
@@ -57,8 +57,9 @@ const Dashboard = () => {
 
     const handleUpdateFlight = async (updatedFlight) => {
         try {
-            console.log("Sending to backend:", updatedFlight);
+            // console.log("Sending to backend:", updatedFlight);
             const response = await updateFlight(updatedFlight).unwrap();
+
             if (response?.data?._id) {
                 dispatch(
                     updateFlightRecord({
@@ -68,12 +69,15 @@ const Dashboard = () => {
                         returnFlight: response.data.returnFlight,
                         origin: response.data.origin,
                         stop: response.data.stop,
+                        flight_class: response.data.flight_class,
                         destination: response.data.destination,
                         date: response.data.date,
                         time: response.data.time,
+                        adult_fare: response.data.adult_fare
                     })
                 );
                 setIsEditPopupOpen(false);
+
             } else {
                 console.error('Unexpected response format:', response);
             }
@@ -86,8 +90,7 @@ const Dashboard = () => {
     return (
         <div className="bg-gradient-to-r from-blue-500 via-teal-400 to-blue-500 min-h-screen">
             <Navbar />
-            <span>test</span>
-            <div className="pt-24 container mx-auto">
+            <div className="pt-24 container-fluid mx-20">
                 {isLoggedIn ? (
                     <div>
                         <Greetings />
@@ -118,7 +121,9 @@ const Dashboard = () => {
                                         <th className="py-2 px-4 border-b text-left">From</th>
                                         <th className="py-2 px-4 border-b text-left">to</th>
                                         <th className="py-2 px-4 border-b text-left">Stop</th>
+                                        <th className="py-2 px-4 border-b text-left">Class Type</th>
                                         <th className="py-2 px-4 border-b text-left">Departure</th>
+                                        <th className="py-2 px-4 border-b text-left">adult fare</th>
                                         <th className="py-2 px-4 border-b text-left">Return</th>
                                         <th className="py-2 px-4 border-b text-left">Time</th>
                                         <th className="py-2 px-4 border-b text-right">Actions</th>
@@ -131,6 +136,8 @@ const Dashboard = () => {
                                             <td className="py-2 px-4 border-b">{flight.origin}</td>
                                             <td className="py-2 px-4 border-b">{flight.destination}</td>
                                             <td className="py-2 px-4 border-b">{flight.stop}</td>
+                                            <td className="py-2 px-4 border-b">{flight.flight_class}</td>
+                                            <td className="py-2 px-4 border-b">{flight.adult_fare}</td>
                                             <td className="py-2 px-4 border-b">{flight.departure}</td>
                                             <td className="py-2 px-4 border-b">{flight.returnFlight}</td>
                                             <td className="py-2 px-4 border-b">{flight.time}</td>

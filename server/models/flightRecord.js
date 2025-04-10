@@ -34,6 +34,14 @@ const flightDetails = mongoose.model('flightDetails', new mongoose.Schema({
         type: String,
         required: true
     },
+    flight_class: {
+        type: String,
+        required: true
+    },
+    adult_fare: {
+        type: String,
+        required: true
+    }
 
 }));
 
@@ -47,7 +55,9 @@ function flightDetailsValidation(flightDetails) {
         destination: Joi.string().required(),
         date: Joi.date(),
         time: Joi.string().required(),
-      
+        flight_class: Joi.string().required(),
+        adult_fare: Joi.string().required()
+
 
     });
 
