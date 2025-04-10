@@ -22,14 +22,14 @@ const EditFlightPopup = ({ flight, isOpen, onClose, onUpdate }) => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setUpdatedFlight({ ...updatedFlight, [name]: value });
-   
+
   };
 
   const handleSubmit = () => {
-    console.log("Updated Flight Data before:", updatedFlight);
+    console.log("Updated Flight Data before:", updatedFlight.infant_fare);
     if (updatedFlight.id) {
       onUpdate(updatedFlight);
-      console.log("adult fare", updatedFlight.adult_fare);
+      console.log("infant fare", updatedFlight.infant_fare);
     } else {
       console.error("No flight ID found for update.");
     }
@@ -142,7 +142,7 @@ const EditFlightPopup = ({ flight, isOpen, onClose, onUpdate }) => {
           <div>
             <label className="block text-gray-700 font-medium mb-2">Adult Fare</label>
             <input
-              type="text"
+              type="number"
               name="adult_fare"
               value={updatedFlight.adult_fare || ''}
               onChange={handleChange}
@@ -151,6 +151,32 @@ const EditFlightPopup = ({ flight, isOpen, onClose, onUpdate }) => {
             />
           </div>
 
+          {/* Child Fare */}
+          <div>
+            <label className="block text-gray-700 font-medium mb-2">Child Fare</label>
+            <input
+              type="number"
+              name="child_fare"
+              value={updatedFlight.child_fare || ''}
+              onChange={handleChange}
+              placeholder="Enter child fare"
+              className="block w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
+            />
+          </div>
+
+          {/* infant Fare */}
+
+          <div>
+            <label className="block text-gray-700 font-medium mb-2">Infant Fare</label>
+            <input
+              type="number"
+              name="infant_fare"
+              value={updatedFlight.infant_fare || ''}
+              onChange={handleChange}
+              placeholder="Enter Infant fare"
+              className="block w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
+            />
+          </div>
           {/* Flight Time */}
           <div>
             <label className="block text-gray-700 font-medium mb-2">Flight Time</label>

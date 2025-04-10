@@ -19,7 +19,10 @@ const AddFlightPopup = ({ isPopupOpen, setIsPopupOpen }) => {
         // date: yup.string().required('Date is required'),
         time: yup.string().required('Time is required'),
         flight_class: yup.string().required('Flight Class is required'),
-        adult_fare: yup.string().required(' Adult fare is Required')
+        adult_fare: yup.number().typeError("Must be a number").required(' Adult fare is Required'),
+        child_fare: yup.number().typeError('Must be a number').required('child fare is required'),
+        infant_fare: yup.number().typeError('Must be a number').required('infant fare is required'),
+
     });
 
     const { register, handleSubmit, formState: { errors } } = useForm({ resolver: yupResolver(schema) });
@@ -44,7 +47,9 @@ const AddFlightPopup = ({ isPopupOpen, setIsPopupOpen }) => {
                 time: flightData.time,
                 returnFlight: flightData.returnFlight,
                 flight_class: flightData.flight_class,
-                adult_fare: flightData.adult_fare
+                adult_fare: flightData.adult_fare,
+                child_fare: flightData.child_fare,
+                infant_fare: flightData.infant_fare
             }))
 
             toast.success("Flight added successfully!", { autoClose: 1000 });
@@ -63,7 +68,7 @@ const AddFlightPopup = ({ isPopupOpen, setIsPopupOpen }) => {
                     onClick={() => setIsPopupOpen(false)}
                 >
                     <div
-                        className="bg-white p-5 rounded shadow-lg w-[30%] relative"
+                        className="bg-white p-5 rounded shadow-lg w-[30%] relative h-[400px] overflow-auto"
                         onClick={(e) => e.stopPropagation()} // Prevents closing when clicking inside the modal
                     >
                         {/* Loader with backdrop */}
@@ -134,17 +139,6 @@ const AddFlightPopup = ({ isPopupOpen, setIsPopupOpen }) => {
                             </div>
 
 
-
-                            <div className="mb-4">
-                                <label className="block text-gray-700">Adult fare</label>
-                                <input
-                                    {...register('adult_fare')}
-                                    type="number"
-                                    className="w-full p-2 border rounded"
-                                />
-                                {errors.adult_fare && <p className="text-red-500 text-sm mt-1">{errors.adult_fare.message}</p>}
-                            </div>
-
                             <div className="mb-4">
                                 <label className="block text-gray-700">Destination</label>
                                 <input
@@ -155,9 +149,35 @@ const AddFlightPopup = ({ isPopupOpen, setIsPopupOpen }) => {
                                 {errors.destination && <p className="text-red-500 text-sm mt-1">{errors.destination.message}</p>}
                             </div>
 
+                            <div className="mb-4">
+                                <label className="block text-gray-700">Adult fare</label>
+                                <input
+                                    {...register('adult_fare')}
+                                    type="text"
+                                    className="w-full p-2 border rounded"
+                                />
+                                {errors.adult_fare && <p className="text-red-500 text-sm mt-1">{errors.adult_fare.message}</p>}
+                            </div>
 
+                            <div className="mb-4">
+                                <label className="block text-gray-700">Child fare</label>
+                                <input
+                                    {...register('child_fare')}
+                                    type="text"
+                                    className="w-full p-2 border rounded"
+                                />
+                                {errors.child_fare && <p className="text-red-500 text-sm mt-1">{errors.child_fare.message}</p>}
+                            </div>
 
-
+                            <div className="mb-4">
+                                <label className="block text-gray-700">Infant fare</label>
+                                <input
+                                    {...register('infant_fare')}
+                                    type="text"
+                                    className="w-full p-2 border rounded"
+                                />
+                                {errors.infant_fare && <p className="text-red-500 text-sm mt-1">{errors.infant_fare.message}</p>}
+                            </div>
 
 
                             <div className="mb-4">

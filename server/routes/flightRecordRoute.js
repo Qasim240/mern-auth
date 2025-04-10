@@ -20,7 +20,9 @@ router.post('/', async (req, res) => {
             time: req.body.time,
             returnFlight: req.body.returnFlight,
             flight_class: req.body.flight_class,
-            adult_fare: req.body.adult_fare
+            adult_fare: req.body.adult_fare,
+            child_fare: req.body.child_fare,
+            infant_fare: req.body.infant_fare
         });
 
         if (flight) return res.status(403).send("Flight Already Exists");
@@ -35,7 +37,9 @@ router.post('/', async (req, res) => {
             time: req.body.time,
             returnFlight: req.body.returnFlight,
             flight_class: req.body.flight_class,
-            adult_fare: req.body.adult_fare
+            adult_fare: req.body.adult_fare,
+            child_fare: req.body.child_fare,
+            infant_fare: req.body.infant_fare
         });
 
         await flight.save();
@@ -51,7 +55,9 @@ router.post('/', async (req, res) => {
             time: flight.time,
             returnFlight: req.body.returnFlight,
             flight_class: req.body.flight_class,
-            adult_fare: req.body.adult_fare
+            adult_fare: req.body.adult_fare,
+            child_fare: req.body.child_fare,
+            infant_fare: req.body.infant_fare
         });
     } catch (ex) {
         console.error("Error", ex);

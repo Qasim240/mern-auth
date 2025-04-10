@@ -59,7 +59,7 @@ const Dashboard = () => {
         try {
             // console.log("Sending to backend:", updatedFlight);
             const response = await updateFlight(updatedFlight).unwrap();
-
+            console.log(response.data.child_fare)
             if (response?.data?._id) {
                 dispatch(
                     updateFlightRecord({
@@ -73,7 +73,9 @@ const Dashboard = () => {
                         destination: response.data.destination,
                         date: response.data.date,
                         time: response.data.time,
-                        adult_fare: response.data.adult_fare
+                        adult_fare: response.data.adult_fare,
+                        child_fare: response.data.child_fare,
+                        infant_fare: response.data.infant_fare
                     })
                 );
                 setIsEditPopupOpen(false);
@@ -88,9 +90,10 @@ const Dashboard = () => {
 
 
     return (
-        <div className="bg-gradient-to-r from-blue-500 via-teal-400 to-blue-500 min-h-screen">
+        <div className="bg-gradient-to-r from-[#1e3a8a] via-[#3b82f6] to-[#0ea5e9]
+ min-h-screen">
             <Navbar />
-            <div className="pt-24 container-fluid mx-20">
+            <div className="pt-24 container-fluid lg:mx-20 mx-5">
                 {isLoggedIn ? (
                     <div>
                         <Greetings />
@@ -114,51 +117,57 @@ const Dashboard = () => {
                                 No flight records found. <br /> Please add a flight to get started!
                             </h3>
                         ) : (
-                            <table className="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
-                                <thead>
-                                    <tr>
-                                        <th className="py-2 px-4 border-b text-left">Flight Name</th>
-                                        <th className="py-2 px-4 border-b text-left">From</th>
-                                        <th className="py-2 px-4 border-b text-left">to</th>
-                                        <th className="py-2 px-4 border-b text-left">Stop</th>
-                                        <th className="py-2 px-4 border-b text-left">Class Type</th>
-                                        <th className="py-2 px-4 border-b text-left">Departure</th>
-                                        <th className="py-2 px-4 border-b text-left">adult fare</th>
-                                        <th className="py-2 px-4 border-b text-left">Return</th>
-                                        <th className="py-2 px-4 border-b text-left">Time</th>
-                                        <th className="py-2 px-4 border-b text-right">Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {filteredFlights.map((flight) => (
-                                        <tr key={flight.id} className="hover:bg-gray-100 transition-all">
-                                            <td className="py-2 px-4 border-b">{flight.flightName}</td>
-                                            <td className="py-2 px-4 border-b">{flight.origin}</td>
-                                            <td className="py-2 px-4 border-b">{flight.destination}</td>
-                                            <td className="py-2 px-4 border-b">{flight.stop}</td>
-                                            <td className="py-2 px-4 border-b">{flight.flight_class}</td>
-                                            <td className="py-2 px-4 border-b">{flight.adult_fare}</td>
-                                            <td className="py-2 px-4 border-b">{flight.departure}</td>
-                                            <td className="py-2 px-4 border-b">{flight.returnFlight}</td>
-                                            <td className="py-2 px-4 border-b">{flight.time}</td>
-                                            <td className="py-2 px-4 border-b text-right">
-                                                <button
-                                                    onClick={() => handleDelete(flight.id)}
-                                                    className="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600 transition-all"
-                                                >
-                                                    Delete
-                                                </button>
-                                                <button
-                                                    onClick={() => openEditPopup(flight)}
-                                                    className="px-3 ml-2 py-1 bg-green-600 text-white rounded hover:bg-green-500 transition-all"
-                                                >
-                                                    Edit
-                                                </button>
-                                            </td>
+                            <div className="relative overflow-x-auto">
+                                <table className="min-w-full bg-white shadow-md rounded-lg">
+                                    <thead>
+                                        <tr>
+                                            <th className="py-2 px-4 border-b text-left whitespace-nowrap">Flight Name</th>
+                                            <th className="py-2 px-4 border-b text-left whitespace-nowrap">From</th>
+                                            <th className="py-2 px-4 border-b text-left whitespace-nowrap">to</th>
+                                            <th className="py-2 px-4 border-b text-left whitespace-nowrap">Stop</th>
+                                            <th className="py-2 px-4 border-b text-left whitespace-nowrap">Class Type</th>
+                                            <th className="py-2 px-4 border-b text-left whitespace-nowrap">Adult fare</th>
+                                            <th className="py-2 px-4 border-b text-left whitespace-nowrap">Child fare</th>
+                                            <th className="py-2 px-4 border-b text-left whitespace-nowrap">Infant fare</th>
+                                            <th className="py-2 px-4 border-b text-left whitespace-nowrap"> Departure </th>
+                                            <th className="py-2 px-4 border-b text-left whitespace-nowrap">Return</th>
+                                            <th className="py-2 px-4 border-b text-left whitespace-nowrap">Time</th>
+                                            <th className="py-2 px-4 border-b text-right whitespace-nowrap">Actions</th>
                                         </tr>
-                                    ))}
-                                </tbody>
-                            </table>
+                                    </thead>
+                                    <tbody>
+                                        {filteredFlights.map((flight) => (
+                                            <tr key={flight.id} className="hover:bg-gray-100 transition-all">
+                                                <td className="py-2 px-4 border-b whitespace-nowrap lg:whitespace-normal">{flight.flightName}</td>
+                                                <td className="py-2 px-4 border-b whitespace-nowrap lg:whitespace-normal ">{flight.origin}</td>
+                                                <td className="py-2 px-4 border-b whitespace-nowrap lg:whitespace-normal ">{flight.destination}</td>
+                                                <td className="py-2 px-4 border-b whitespace-nowrap lg:whitespace-normal ">{flight.stop}</td>
+                                                <td className="py-2 px-4 border-b whitespace-nowrap lg:whitespace-normal ">{flight.flight_class}</td>
+                                                <td className="py-2 px-4 border-b whitespace-nowrap lg:whitespace-normal ">{flight.adult_fare}</td>
+                                                <td className="py-2 px-4 border-b whitespace-nowrap lg:whitespace-normal ">{flight.child_fare}</td>
+                                                <td className="py-2 px-4 border-b whitespace-nowrap lg:whitespace-normal ">{flight.infant_fare}</td>
+                                                <td className="py-2 px-4 border-b whitespace-nowrap">{flight.departure}</td>
+                                                <td className="py-2 px-4 border-b whitespace-nowrap">{flight.returnFlight}</td>
+                                                <td className="py-2 px-4 border-b ">{flight.time}</td>
+                                                <td className="py-2 px-4 border-b  text-right whitespace-nowrap">
+                                                    <button
+                                                        onClick={() => handleDelete(flight.id)}
+                                                        className="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600 transition-all"
+                                                    >
+                                                        Delete
+                                                    </button>
+                                                    <button
+                                                        onClick={() => openEditPopup(flight)}
+                                                        className="px-3 ml-2 py-1 bg-green-600 text-white rounded hover:bg-green-500 transition-all"
+                                                    >
+                                                        Edit
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
+                            </div>
                         )}
 
                         <div className='flex  items-center justify-end mt-4'>

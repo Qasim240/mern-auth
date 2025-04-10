@@ -25,6 +25,8 @@ router.put('/:id', async (req, res) => {
           returnFlight: req.body.returnFlight,
           flight_class: req.body.flight_class,
           adult_fare: req.body.adult_fare,
+          child_fare: req.body.child_fare,
+          infant_fare: req.body.infant_fare,
         },
         { new: true }
       );

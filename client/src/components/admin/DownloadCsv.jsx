@@ -21,7 +21,7 @@ const DownloadCsv = ({ flightsRecords, hasRecords }) => {
         flight.returnFlight,
         flight.time,
         flight.stop,
-        flight.adult_flight
+        flight.adult_fare
       ].join(",");
       csvRows.push(row);
     });
