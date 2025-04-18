@@ -22,15 +22,13 @@ const Dashboard = () => {
     const [deleteFlight] = useDeleteFlightMutation();
     const [updateFlight] = useUpdatedFlightMutation();
 
-
     const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
     const flightsRecords = useSelector((state) => state.flightRecord.flightRecord);
     const hasRecords = flightsRecords?.length > 0;
 
-    const [filteredFlights, setfilteredFlights] = useState(flightsRecords)
+    const [filteredFlights, setfilteredFlights] = useState(flightsRecords);
     const [dateFilteredFlights, setDateFilteredFlights] = useState(flightsRecords);
     const dispatch = useDispatch();
-
 
     const [isPopupOpen, setIsPopupOpen] = useState(false);
     const [isEditPopupOpen, setIsEditPopupOpen] = useState(false);
@@ -44,22 +42,17 @@ const Dashboard = () => {
         setIsEditPopupOpen(true);
     };
 
-
     useEffect(() => {
-        setfilteredFlights(flightsRecords)
-    }, [flightsRecords])
+        setfilteredFlights(flightsRecords);
+    }, [flightsRecords]);
 
     useEffect(() => {
         setfilteredFlights(dateFilteredFlights);
     }, [dateFilteredFlights]);
 
-
-
     const handleUpdateFlight = async (updatedFlight) => {
         try {
-            // console.log("Sending to backend:", updatedFlight);
             const response = await updateFlight(updatedFlight).unwrap();
-            console.log(response.data.child_fare)
             if (response?.data?._id) {
                 dispatch(
                     updateFlightRecord({
@@ -72,14 +65,12 @@ const Dashboard = () => {
                         flight_class: response.data.flight_class,
                         destination: response.data.destination,
                         date: response.data.date,
-                        time: response.data.time,
                         adult_fare: response.data.adult_fare,
                         child_fare: response.data.child_fare,
-                        infant_fare: response.data.infant_fare
+                        infant_fare: response.data.infant_fare,
                     })
                 );
                 setIsEditPopupOpen(false);
-
             } else {
                 console.error('Unexpected response format:', response);
             }
@@ -88,22 +79,18 @@ const Dashboard = () => {
         }
     };
 
-
     return (
-        <div className="bg-gradient-to-r from-[#1e3a8a] via-[#3b82f6] to-[#0ea5e9]
- min-h-screen">
+        <div className="bg-gradient-to-r from-[#1e3a8a] via-[#3b82f6] to-[#0ea5e9] min-h-screen">
             <Navbar />
             <div className="pt-24 container-fluid lg:mx-20 mx-5">
                 {isLoggedIn ? (
                     <div>
                         <Greetings />
                         <div className="text-right">
-
-                            <div className='flex items-end justify-between mb-3'>
+                            <div className="flex items-end justify-between mb-3">
                                 <RangeFilter flightsRecords={flightsRecords} setDateFilteredFlights={setDateFilteredFlights} />
                                 <SearchFlight flightsRecords={flightsRecords} setfilteredFlights={setfilteredFlights} />
                             </div>
-
                         </div>
 
                         {isLoading && (
@@ -117,48 +104,48 @@ const Dashboard = () => {
                                 No flight records found. <br /> Please add a flight to get started!
                             </h3>
                         ) : (
-                            <div className="relative overflow-x-auto">
-                                <table className="min-w-full bg-white shadow-md rounded-lg">
-                                    <thead>
+                            <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
+                                <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                                    <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                                         <tr>
-                                            <th className="py-2 px-4 border-b text-left whitespace-nowrap">Flight Name</th>
-                                            <th className="py-2 px-4 border-b text-left whitespace-nowrap">From</th>
-                                            <th className="py-2 px-4 border-b text-left whitespace-nowrap">to</th>
-                                            <th className="py-2 px-4 border-b text-left whitespace-nowrap">Stop</th>
-                                            <th className="py-2 px-4 border-b text-left whitespace-nowrap">Class Type</th>
-                                            <th className="py-2 px-4 border-b text-left whitespace-nowrap">Adult fare</th>
-                                            <th className="py-2 px-4 border-b text-left whitespace-nowrap">Child fare</th>
-                                            <th className="py-2 px-4 border-b text-left whitespace-nowrap">Infant fare</th>
-                                            <th className="py-2 px-4 border-b text-left whitespace-nowrap"> Departure </th>
-                                            <th className="py-2 px-4 border-b text-left whitespace-nowrap">Return</th>
-                                            <th className="py-2 px-4 border-b text-left whitespace-nowrap">Time</th>
-                                            <th className="py-2 px-4 border-b text-right whitespace-nowrap">Actions</th>
+                                            <th scope="col" className="px-6 py-3">Flight Name</th>
+                                            <th scope="col" className="px-6 py-3">From</th>
+                                            <th scope="col" className="px-6 py-3">To</th>
+                                            <th scope="col" className="px-6 py-3">Stop</th>
+                                            <th scope="col" className="px-6 py-3">Class Type</th>
+                                            <th scope="col" className="px-6 py-3">Adult Fare</th>
+                                            <th scope="col" className="px-6 py-3">Child Fare</th>
+                                            <th scope="col" className="px-6 py-3">Infant Fare</th>
+                                            <th scope="col" className="px-6 py-3">Departure</th>
+                                            <th scope="col" className="px-6 py-3">Return</th>
+                                            <th scope="col" className="px-6 py-3">Date</th>
+                                            <th scope="col" className="px-6 py-3">Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         {filteredFlights.map((flight) => (
-                                            <tr key={flight.id} className="hover:bg-gray-100 transition-all">
-                                                <td className="py-2 px-4 border-b whitespace-nowrap lg:whitespace-normal">{flight.flightName}</td>
-                                                <td className="py-2 px-4 border-b whitespace-nowrap lg:whitespace-normal ">{flight.origin}</td>
-                                                <td className="py-2 px-4 border-b whitespace-nowrap lg:whitespace-normal ">{flight.destination}</td>
-                                                <td className="py-2 px-4 border-b whitespace-nowrap lg:whitespace-normal ">{flight.stop}</td>
-                                                <td className="py-2 px-4 border-b whitespace-nowrap lg:whitespace-normal ">{flight.flight_class}</td>
-                                                <td className="py-2 px-4 border-b whitespace-nowrap lg:whitespace-normal ">{flight.adult_fare}</td>
-                                                <td className="py-2 px-4 border-b whitespace-nowrap lg:whitespace-normal ">{flight.child_fare}</td>
-                                                <td className="py-2 px-4 border-b whitespace-nowrap lg:whitespace-normal ">{flight.infant_fare}</td>
-                                                <td className="py-2 px-4 border-b whitespace-nowrap">{flight.departure}</td>
-                                                <td className="py-2 px-4 border-b whitespace-nowrap">{flight.returnFlight}</td>
-                                                <td className="py-2 px-4 border-b ">{flight.time}</td>
-                                                <td className="py-2 px-4 border-b  text-right whitespace-nowrap">
+                                            <tr key={flight.id} className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700 border-gray-200">
+                                                <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{flight.flightName}</td>
+                                                <td className="px-6 py-4">{flight.origin}</td>
+                                                <td className="px-6 py-4">{flight.destination}</td>
+                                                <td className="px-6 py-4">{flight.stop}</td>
+                                                <td className="px-6 py-4">{flight.flight_class}</td>
+                                                <td className="px-6 py-4">{flight.adult_fare}</td>
+                                                <td className="px-6 py-4">{flight.child_fare}</td>
+                                                <td className="px-6 py-4">{flight.infant_fare}</td>
+                                                <td className="px-6 py-4">{flight.departure}</td>
+                                                <td className="px-6 py-4">{flight.returnFlight}</td>
+                                                <td className="px-6 py-4">{flight.date}</td>
+                                                <td className="px-6 py-4 text-right flex nowrap">
                                                     <button
                                                         onClick={() => handleDelete(flight.id)}
-                                                        className="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600 transition-all"
+                                                        className="px-2 py-1 bg-red-500 text-white rounded hover:bg-red-600 transition-all"
                                                     >
                                                         Delete
                                                     </button>
                                                     <button
                                                         onClick={() => openEditPopup(flight)}
-                                                        className="px-3 ml-2 py-1 bg-green-600 text-white rounded hover:bg-green-500 transition-all"
+                                                        className="px-2 ml-2 py-1 bg-green-600 text-white rounded hover:bg-green-500 transition-all"
                                                     >
                                                         Edit
                                                     </button>
@@ -170,13 +157,13 @@ const Dashboard = () => {
                             </div>
                         )}
 
-                        <div className='flex  items-center justify-end mt-4'>
+                        <div className="flex items-center justify-end mt-4">
                             <DownloadCsv flightsRecords={flightsRecords} hasRecords={hasRecords} />
                             <button
                                 onClick={handleOpenPopup}
-                                className="px-3 ml-2 py-1 font-bold bg-white text-black rounded transition-all px-4 py-2"
+                                className="px-3 ml-2 py-1 font-bold dark:bg-gray-900 text-white text-[12px] text-black rounded transition-all text-[12px]"
                             >
-                                <div className='flex items-center'>
+                                <div className="flex items-center">
                                     <span>Add New Flight</span>
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
@@ -190,7 +177,6 @@ const Dashboard = () => {
                                         />
                                     </svg>
                                 </div>
-
                             </button>
                             <BulkFileUpload />
                         </div>
@@ -212,8 +198,5 @@ const Dashboard = () => {
         </div>
     );
 };
-
-
-
 
 export default Dashboard;

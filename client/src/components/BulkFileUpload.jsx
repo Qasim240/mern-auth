@@ -69,7 +69,7 @@ const BulkFileUpload = () => {
             />
             <label
                 htmlFor="file-upload"
-                className="px-4 py-2 ml-2 font-semibold bg-blue-600 text-white rounded cursor-pointer transition-all hover:bg-blue-700 disabled:bg-gray-300 disabled:cursor-not-allowed"
+                className="px-4 py-2 ml-2 font-semibold dark:bg-gray-900 text-white text-[12px] rounded cursor-pointer transition-all hover:dark:bg-gray-700 disabled:bg-gray-300 disabled:cursor-not-allowed"
             >
                 Upload CSV File
             </label>
