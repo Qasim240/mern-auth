@@ -116,8 +116,8 @@ const Dashboard = () => {
                                             <th scope="col" className="px-6 py-3">Adult Fare</th>
                                             <th scope="col" className="px-6 py-3">Child Fare</th>
                                             <th scope="col" className="px-6 py-3">Infant Fare</th>
-                                            <th scope="col" className="px-6 py-3">Departure</th>
-                                            <th scope="col" className="px-6 py-3">Return</th>
+                                            <th scope="col" className="px-6 py-3">Departure Time</th>
+                                            <th scope="col" className="px-6 py-3">Return Time</th>
                                             <th scope="col" className="px-6 py-3">Date</th>
                                             <th scope="col" className="px-6 py-3">Actions</th>
                                         </tr>

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { handleLogout } from '../../utils/Logout';
+import { logo } from '../../imagesPath';
 
 const Navbar = () => {
     const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -36,7 +37,7 @@ const Navbar = () => {
                 <div className="container mx-auto px-4">
                     <div className="flex justify-between items-center h-16">
                         <a href="/" className="text-2xl font-semibold text-gray-800 hover:text-gray-600 transition duration-300">
-                            MyApp
+                            <img src={logo} alt="" />
                         </a>
                         <div className="flex items-center space-x-10">
                             <Link to="/" className="text-gray-800 font-medium hover:text-gray-600 transition duration-300">
