@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 
 const EditFlightPopup = ({ flight, isOpen, onClose, onUpdate }) => {
   const [updatedFlight, setUpdatedFlight] = useState({});
@@ -33,17 +35,23 @@ const EditFlightPopup = ({ flight, isOpen, onClose, onUpdate }) => {
     }
   };
 
+  const isValidDate = (date) => {
+    const parsed = Date.parse(date);
+    return !isNaN(parsed);
+  };
+
+  const inputClass =
+    "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:text-white";
+
   if (!isVisible) return null;
 
   return (
     <div id="crud-modal" className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto overflow-x-hidden bg-black bg-opacity-50">
       <div className="relative p-4 w-full max-w-2xl max-h-full">
         <div className="relative bg-white rounded-lg shadow-sm dark:bg-gray-700">
-          {/* Modal header */}
+          {/* Modal Header */}
           <div className="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600 border-gray-200">
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
-              Update Flight
-            </h3>
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Update Flight</h3>
             <button
               type="button"
               onClick={onClose}
@@ -56,43 +64,158 @@ const EditFlightPopup = ({ flight, isOpen, onClose, onUpdate }) => {
             </button>
           </div>
 
-          {/* Modal body */}
+          {/* Modal Body */}
           <form onSubmit={handleSubmit} className="p-4 md:p-5">
             <div className="grid gap-4 mb-4 grid-cols-2">
-              {[
-                { label: "Flight Name", name: "flightName", type: "text", colSpan: 2 },
-                { label: "From", name: "origin", type: "text" },
-                { label: "To", name: "destination", type: "text" },
-                { label: "Stop", name: "stop", type: "text" },
-                { label: "Departure Time", name: "departure", type: "time" },
-                { label: "Return Time", name: "returnFlight", type: "time" },
-                { label: "Adult Fare", name: "adult_fare", type: "number" },
-                { label: "Child Fare", name: "child_fare", type: "number" },
-                { label: "Infant Fare", name: "infant_fare", type: "number" },
-                { label: "Flight Date", name: "date", type: "date", colSpan: 2 },
-              ].map(({ label, name, type, colSpan = 1 }) => (
-                <div key={name} className={`col-span-2 sm:col-span-${colSpan}`}>
-                  <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{label}</label>
-                  <input
-                    type={type}
-                    name={name}
-                    value={updatedFlight[name] || ''}
-                    onChange={handleChange}
-                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:text-white"
-                    placeholder={`Enter ${label.toLowerCase()}`}
-                    required
-                  />
-                </div>
-              ))}
+              <div className="col-span-2">
+                <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Flight Name</label>
+                <input
+                  type="text"
+                  name="flightName"
+                  value={updatedFlight.flightName || ''}
+                  onChange={handleChange}
+                  className={inputClass}
+                  placeholder="Enter flight name"
+                  required
+                />
+              </div>
+
+              <div>
+                <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">From</label>
+                <input
+                  type="text"
+                  name="origin"
+                  value={updatedFlight.origin || ''}
+                  onChange={handleChange}
+                  className={inputClass}
+                  placeholder="Enter origin"
+                  required
+                />
+              </div>
+
+              <div>
+                <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">To</label>
+                <input
+                  type="text"
+                  name="destination"
+                  value={updatedFlight.destination || ''}
+                  onChange={handleChange}
+                  className={inputClass}
+                  placeholder="Enter destination"
+                  required
+                />
+              </div>
+
+              <div>
+                <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Stop</label>
+                <input
+                  type="text"
+                  name="stop"
+                  value={updatedFlight.stop || ''}
+                  onChange={handleChange}
+                  className={inputClass}
+                  placeholder="Enter stop"
+                  required
+                />
+              </div>
+
+              {/* Departure Time */}
+              <div>
+                <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Departure Time</label>
+                <DatePicker
+               
+                  selected={isValidDate(updatedFlight.departure) ? new Date(updatedFlight.departure) : null}
+                  onChange={(date) =>
+                    setUpdatedFlight({ ...updatedFlight})
+                  }
+                  showTimeSelect
+                  showTimeSelectOnly
+                  timeIntervals={15}
+                  timeCaption="Time"
+                  dateFormat="h:mm aa"
+                  placeholderText="Select time"
+                  className={inputClass}
+                />
+              </div>
+
+              {/* Return Time */}
+              <div>
+                <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Return Time</label>
+                <DatePicker
+                  selected={isValidDate(updatedFlight.returnFlight) ? new Date(updatedFlight.returnFlight) : null}
+                  onChange={(date) =>
+                    setUpdatedFlight({ ...updatedFlight, returnFlight: date})
+                  }
+                  showTimeSelect
+                  showTimeSelectOnly
+                  timeIntervals={15}
+                  timeCaption="Time"
+                  dateFormat="h:mm aa"
+                  placeholderText="Select time"
+                  className={inputClass}
+                />
+              </div>
+
+              <div>
+                <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Adult Fare</label>
+                <input
+                  type="number"
+                  name="adult_fare"
+                  value={updatedFlight.adult_fare || ''}
+                  onChange={handleChange}
+                  className={inputClass}
+                  placeholder="Enter adult fare"
+                  required
+                />
+              </div>
+
+              <div>
+                <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Child Fare</label>
+                <input
+                  type="number"
+                  name="child_fare"
+                  value={updatedFlight.child_fare || ''}
+                  onChange={handleChange}
+                  className={inputClass}
+                  placeholder="Enter child fare"
+                  required
+                />
+              </div>
+
+              <div>
+                <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Infant Fare</label>
+                <input
+                  type="number"
+                  name="infant_fare"
+                  value={updatedFlight.infant_fare || ''}
+                  onChange={handleChange}
+                  className={inputClass}
+                  placeholder="Enter infant fare"
+                  required
+                />
+              </div>
+
+              {/* Flight Date */}
+              <div className="col-span-2">
+                <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Flight Date</label>
+                <input
+                  type="date"
+                  name="date"
+                  value={updatedFlight.date || ''}
+                  onChange={handleChange}
+                  className={inputClass}
+                  required
+                />
+              </div>
 
               {/* Flight Class */}
-              <div className="col-span-2 sm:col-span-1">
+              <div>
                 <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Flight Class</label>
                 <select
                   name="flight_class"
                   value={updatedFlight.flight_class || ''}
                   onChange={handleChange}
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:text-white"
+                  className={inputClass}
                 >
                   <option value="">Select a class</option>
                   <option value="Premium Economy">Premium Economy</option>
@@ -103,7 +226,7 @@ const EditFlightPopup = ({ flight, isOpen, onClose, onUpdate }) => {
               </div>
             </div>
 
-            {/* Submit button */}
+            {/* Submit and Cancel Buttons */}
             <div className="flex justify-end gap-4 mt-6">
               <button
                 type="submit"
